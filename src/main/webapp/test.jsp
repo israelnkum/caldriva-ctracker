@@ -16,6 +16,7 @@
 <%@ page import="com.google.gson.JsonObject"%>
 <%@ page import="java.util.*,java.sql.*" %>
 <%@ page import="java.io.*" %>
+<%@ page import="control.DBConnection" %>
 
 
 <%
@@ -25,8 +26,8 @@ Connection con;
 PreparedStatement pst;
 ResultSet rs;
 
-Class.forName("com.mysql.jdbc.Driver");
-con = DriverManager.getConnection("jdbc:mysql://localhost/caldriva","root","root");
+
+con = DBConnection.getConnection();
 Statement stmt = con.createStatement();
 String option= request.getParameter("option");
 if(option.equals("adminM")){

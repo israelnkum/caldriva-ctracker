@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-         pageEncoding="ISO-8859-1"  errorPage="error.jsp"%>
+	pageEncoding="ISO-8859-1"  errorPage="error.jsp"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="org.json.simple.JSONObject"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.Connection"%>
-<%@ page import="com.techlineafrica.ctracker.db.Database" %>
+<%@ page import="control.DBConnection" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -23,1392 +23,1390 @@
     <link rel="stylesheet" href="assets/vendors/iconly/bold.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    
     <link rel="stylesheet" href="assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
     <link rel="stylesheet" href="assets/vendors/bootstrap-icons/bootstrap-icons.css">
     <link rel="stylesheet" href="assets/css/app.css">
     <link rel="shortcut icon" href="assets/images/profile.jpg" type="image/x-icon">
+    
+           <!-- Alertify CSS -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+<!-- Default theme -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+<!-- Semantic UI theme -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
+<!-- Bootstrap theme -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css"/>
+  <!-- Alertify js -->  
+ <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+    
+    
+     <style>
+    
+body{margin-top:20px;}
+.preloader {
+  position: fixed;
+  left: 0;
+  width: 0;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  z-index: 9999999;
+  -webkit-transition: .9s;
+  transition: .9s;
+}
 
-    <!-- Alertify CSS -->
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
-    <!-- Default theme -->
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
-    <!-- Semantic UI theme -->
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
-    <!-- Bootstrap theme -->
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css"/>
-    <!-- Alertify js -->
-    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+.preloader .loader {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: inline-block;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  top: 45%;
+  -webkit-transform: translateY(-45%);
+          transform: translateY(-45%);
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
 
+.preloader .loader .loader-outter {
+  position: absolute;
+  border: 4px solid #ffffff;
+  border-left-color: transparent;
+  border-bottom: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  -webkit-animation: loader-outter 1s cubic-bezier(0.42, 0.61, 0.58, 0.41) infinite;
+          animation: loader-outter 1s cubic-bezier(0.42, 0.61, 0.58, 0.41) infinite;
+}
 
-    <style>
+.preloader .loader .loader-inner {
+  position: absolute;
+  border: 4px solid #ffffff;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  left: calc(40% - 21px);
+  top: calc(40% - 21px);
+  border-right: 0;
+  border-top-color: transparent;
+  -webkit-animation: loader-inner 1s cubic-bezier(0.42, 0.61, 0.58, 0.41) infinite;
+          animation: loader-inner 1s cubic-bezier(0.42, 0.61, 0.58, 0.41) infinite;
+}
 
-        body{margin-top:20px;}
-        .preloader {
-            position: fixed;
-            left: 0;
-            width: 0;
-            height: 100%;
-            width: 100%;
-            text-align: center;
-            z-index: 9999999;
-            -webkit-transition: .9s;
-            transition: .9s;
-        }
+.preloader .loader .indicator {
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 50%;
+  -webkit-transform: translateY(-50%) scale(1.5);
+          transform: translateY(-50%) scale(1.5);
+}
 
-        .preloader .loader {
-            position: absolute;
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            display: inline-block;
-            left: 0;
-            right: 0;
-            margin: 0 auto;
-            top: 45%;
-            -webkit-transform: translateY(-45%);
-            transform: translateY(-45%);
-            -webkit-transition: 0.5s;
-            transition: 0.5s;
-        }
+.preloader .loader .indicator svg polyline {
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
 
-        .preloader .loader .loader-outter {
-            position: absolute;
-            border: 4px solid #ffffff;
-            border-left-color: transparent;
-            border-bottom: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            -webkit-animation: loader-outter 1s cubic-bezier(0.42, 0.61, 0.58, 0.41) infinite;
-            animation: loader-outter 1s cubic-bezier(0.42, 0.61, 0.58, 0.41) infinite;
-        }
+.preloader .loader .indicator svg polyline#back {
+  stroke: #ffffff;
+}
 
-        .preloader .loader .loader-inner {
-            position: absolute;
-            border: 4px solid #ffffff;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            left: calc(40% - 21px);
-            top: calc(40% - 21px);
-            border-right: 0;
-            border-top-color: transparent;
-            -webkit-animation: loader-inner 1s cubic-bezier(0.42, 0.61, 0.58, 0.41) infinite;
-            animation: loader-inner 1s cubic-bezier(0.42, 0.61, 0.58, 0.41) infinite;
-        }
+.preloader .loader .indicator svg polyline#front {
+  stroke: #1A76D1;
+  stroke-dasharray: 12, 36;
+  stroke-dashoffset: 48;
+  -webkit-animation: dash 1s linear infinite;
+          animation: dash 1s linear infinite;
+}
 
-        .preloader .loader .indicator {
-            position: absolute;
-            right: 0;
-            left: 0;
-            top: 50%;
-            -webkit-transform: translateY(-50%) scale(1.5);
-            transform: translateY(-50%) scale(1.5);
-        }
+.preloader::before, .preloader::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 60%;
+  z-index: -1;
+  background: #1A76D1;
+  -webkit-transition: .9s;
+  transition: .9s;
+}
 
-        .preloader .loader .indicator svg polyline {
-            fill: none;
-            stroke-width: 2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
+.preloader::after {
+  left: auto;
+  right: 0;
+}
 
-        .preloader .loader .indicator svg polyline#back {
-            stroke: #ffffff;
-        }
+.preloader.preloader-deactivate {
+  visibility: hidden;
+}
 
-        .preloader .loader .indicator svg polyline#front {
-            stroke: #1A76D1;
-            stroke-dasharray: 12, 36;
-            stroke-dashoffset: 48;
-            -webkit-animation: dash 1s linear infinite;
-            animation: dash 1s linear infinite;
-        }
+.preloader.preloader-deactivate::after, .preloader.preloader-deactivate::before {
+  width: 0;
+}
 
-        .preloader::before, .preloader::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 60%;
-            z-index: -1;
-            background: #1A76D1;
-            -webkit-transition: .9s;
-            transition: .9s;
-        }
+.preloader.preloader-deactivate .loader {
+  opacity: 0;
+  visibility: hidden;
+}
 
-        .preloader::after {
-            left: auto;
-            right: 0;
-        }
+@-webkit-keyframes loader-outter {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
 
-        .preloader.preloader-deactivate {
-            visibility: hidden;
-        }
+@keyframes loader-outter {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
 
-        .preloader.preloader-deactivate::after, .preloader.preloader-deactivate::before {
-            width: 0;
-        }
+@-webkit-keyframes loader-inner {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(-360deg);
+            transform: rotate(-360deg);
+  }
+}
 
-        .preloader.preloader-deactivate .loader {
-            opacity: 0;
-            visibility: hidden;
-        }
+@keyframes loader-inner {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(-360deg);
+            transform: rotate(-360deg);
+  }
+}
 
-        @-webkit-keyframes loader-outter {
-            0% {
-                -webkit-transform: rotate(0deg);
-                transform: rotate(0deg);
-            }
-            100% {
-                -webkit-transform: rotate(360deg);
-                transform: rotate(360deg);
-            }
-        }
+@-webkit-keyframes dash {
+  62.5% {
+    opacity: 0;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
 
-        @keyframes loader-outter {
-            0% {
-                -webkit-transform: rotate(0deg);
-                transform: rotate(0deg);
-            }
-            100% {
-                -webkit-transform: rotate(360deg);
-                transform: rotate(360deg);
-            }
-        }
-
-        @-webkit-keyframes loader-inner {
-            0% {
-                -webkit-transform: rotate(0deg);
-                transform: rotate(0deg);
-            }
-            100% {
-                -webkit-transform: rotate(-360deg);
-                transform: rotate(-360deg);
-            }
-        }
-
-        @keyframes loader-inner {
-            0% {
-                -webkit-transform: rotate(0deg);
-                transform: rotate(0deg);
-            }
-            100% {
-                -webkit-transform: rotate(-360deg);
-                transform: rotate(-360deg);
-            }
-        }
-
-        @-webkit-keyframes dash {
-            62.5% {
-                opacity: 0;
-            }
-            to {
-                stroke-dashoffset: 0;
-            }
-        }
-
-        @keyframes dash {
-            62.5% {
-                opacity: 0;
-            }
-            to {
-                stroke-dashoffset: 0;
-            }
-        }
+@keyframes dash {
+  62.5% {
+    opacity: 0;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
     </style>
-
+    
 </head>
 
 <body>
-
-
-
-<div class="card">
-    <div class="card-body" align="right">
-        <div class="badges">
-
-
-            <span class="badge bg-light-success"><i class="fa-solid fa-circle-user fa-2xl"></i> UNION  &nbsp;<%--<%out.println(union); %>--%></span>
-            <div class="btn-group me-1 mb-1">
-                <div class="dropdown">
-                    <button type="button" class="btn btn-danger dropdown-toggle"
-                            data-bs-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false">
-                        <i class="fa-solid fa-gear"></i>
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#reset" style="cursor:pointer"><i class="fa-solid fa-wrench"></i> &nbsp;  &nbsp;Account Reset</a>
-                        <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#union" style="cursor:pointer"><i class="fa-solid fa-users"></i> &nbsp;  &nbsp;Add Union Manager</a>
-                        <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#branch" style="cursor:pointer"><i class="fa-solid fa-user-group"></i>  &nbsp;  &nbsp;Add Branch Manager</a>
-                        <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#field" style="cursor:pointer"><i class="fa-solid fa-chalkboard-user"></i> &nbsp;  &nbsp;Add field staff </a>
-                        <a class="dropdown-item" href="logOut" style="cursor:pointer;"><i class="fa-solid fa-right-from-bracket"></i> &nbsp;  &nbsp; Logout</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-<%
-    Database database = new Database();
-    Connection  con = database.getConnection();
-
-    Statement st = con.createStatement();
+  
+    <%
+	Connection con=DBConnection.getConnection();
+	Statement st = con.createStatement();
     String union = (String)session.getAttribute("name");
     String branch = (String)session.getAttribute("branch");
     String pass = (String)session.getAttribute("pass");
-    try{
+  	try{
+	 
 
-
-        String b=null;
-        String p=null;
-        String u=null;
+	String b=null;
+	String p=null;
+	String u=null;
         response.setHeader("cache-control", "no-cache, no-store, must-revalidate");
-        ResultSet resultSet = st.executeQuery("select * from login where unions='admin'");
-
-        while(resultSet.next()){
-            b=resultSet.getString("branch");
-            u=resultSet.getString("unions");
-            p=resultSet.getString("password");
-        }
+	ResultSet resultSet = st.executeQuery("select * from login where unions='admin'");
+	
+	while(resultSet.next()){
+		b=resultSet.getString("branch");
+		u=resultSet.getString("unions");
+		p=resultSet.getString("password");
+	}
         if(!pass.equals(p) || !branch.equals(b) || !union.equals(u)|| pass.equals(null) || pass.equals("")){
-            response.sendRedirect("index.jsp");
+              response.sendRedirect("index.jsp");   
         }
-    }catch(Exception e){
-        response.sendRedirect("index.jsp");
+  	}catch(Exception e){
+  		 response.sendRedirect("index.jsp"); 
+  		 
+  	}
+   %>
 
-    }
-%>
-
-<!--Danger theme Modal -->
-<div class="modal fade text-left" id="reset" tabindex="-1"
-     role="dialog" aria-labelledby="myModalLabel120"
-     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
-         role="document">
-        <div class="modal-content">
-            <div class="modal-header bg-danger">
-                <h5 class="modal-title white">
-                    Reset Your Account
-                </h5>
-                <button type="button" class="close"
-                        data-bs-dismiss="modal" aria-label="Close">
-                    <i data-feather="x"></i>
-                </button>
+ <div class="card">
+        <div class="card-body" align="right">
+            <div class="badges">
+                
+                
+                <span class="badge bg-light-success"><i class="fa-solid fa-circle-user fa-2xl"></i>  &nbsp;<%out.println(union); %></span>
+                 <div class="btn-group me-1 mb-1">
+			                 <div class="dropdown">
+			                     <button type="button" class="btn btn-danger dropdown-toggle"
+			                         data-bs-toggle="dropdown" aria-haspopup="true"
+			                         aria-expanded="false">
+			                         <i class="fa-solid fa-gear"></i>
+			                     </button>
+			                     <div class="dropdown-menu">
+			                         <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#reset" style="cursor:pointer"><i class="fa-solid fa-wrench"></i> &nbsp;  &nbsp;Account Reset</a>
+			                          <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#union" style="cursor:pointer"><i class="fa-solid fa-users"></i> &nbsp;  &nbsp;Add Union Manager</a>
+			                          <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#branch" style="cursor:pointer"><i class="fa-solid fa-user-group"></i>  &nbsp;  &nbsp;Add Branch Manager</a>
+			                          <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#field" style="cursor:pointer"><i class="fa-solid fa-chalkboard-user"></i> &nbsp;  &nbsp;Add field staff </a>
+			                          <a class="dropdown-item" href="logOut" style="cursor:pointer;"><i class="fa-solid fa-right-from-bracket"></i> &nbsp;  &nbsp; Logout</a>
+			                     </div>
+			                 </div>
+			             </div>
             </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-sm-4">
-                        <label>Union</label>
-                        <input class="form-control form-control-sm" type="text"
-                               placeholder="Small Input">
-                    </div>
+        </div>
+    </div>
+    
+                                                
+                                                    
+                                                 
+                                                    
+                                                 <!--Danger theme Modal -->
+                                                    <div class="modal fade text-left" id="reset" tabindex="-1"
+                                                        role="dialog" aria-labelledby="myModalLabel120"
+                                                        aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+                                                            role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header bg-danger">
+                                                                    <h5 class="modal-title white" id="myModalLabel120">
+                                                                        Reset Your Account
+                                                                    </h5>
+                                                                    <button type="button" class="close"
+                                                                        data-bs-dismiss="modal" aria-label="Close">
+                                                                        <i data-feather="x"></i>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                  <div class="row">
+                                                                    <div class="col-sm-4">
+							                                            <label>Union</label>
+							                                            <input class="form-control form-control-sm" type="text"
+							                                                placeholder="Small Input">
+							                                        </div>
+							                                        
+							                                        <div class="col-sm-4">
+							                                            <label>Branch</label>
+							                                            <input class="form-control form-control-sm" type="text"
+							                                                placeholder="Small Input">
+							                                        </div>
+							                                        
+							                                        <div class="col-sm-4">
+							                                            <label>Password</label>
+							                                            <input class="form-control form-control-sm" type="text"
+							                                                placeholder="Small Input">
+							                                        </div>
+							                                        </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button"
+                                                                        class="btn btn-light-secondary"
+                                                                        data-bs-dismiss="modal">
+                                                                        <i class="bx bx-x d-block d-sm-none"></i>
+                                                                        <span class="d-none d-sm-block">Close</span>
+                                                                    </button>
+                                                                    <button type="button" class="btn btn-danger ml-1"
+                                                                        data-bs-dismiss="modal">
+                                                                        <i class="bx bx-check d-block d-sm-none"></i>
+                                                                        <span class="d-none d-sm-block">Reset</span>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                     <div class="modal fade text-left" id="union" tabindex="-1"
+                                                        role="dialog" aria-labelledby="myModalLabel120"
+                                                        aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+                                                            role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header bg-danger">
+                                                                    <h5 class="modal-title white" id="myModalLabel120">
+                                                                        Authenticate Union Manager
+                                                                    </h5>
+                                                                    <button type="button" class="close"
+                                                                        data-bs-dismiss="modal" aria-label="Close">
+                                                                        <i data-feather="x"></i>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                  <div class="row">
+                                                                     <div class="form-group floating-label col-md-6 mb-3">
+																			<label for="" class="mt-1">Select Union</label>
+																				<select name="driver" id="unionM" class="choices form-select">
+																				<%
+																				    String sql="Select * from union1";
+																				    
+																					ResultSet rst = st.executeQuery(sql);
+																					while(rst.next()){
+																				%>
+																						<option ><%=rst.getString("unionName")%></option>
+																				<%} %>
+																					
+																				</select> 
+																			</div>
+							                                        
+							                                       <div class="col-sm-6">
+							                                            <label>Manager's Name</label>
+							                                            <input class="form-control form-control" type="text"
+							                                                id="mName" required>
+							                                        </div>
+							                                        
+							                                        <div class="col-sm-12">
+							                                            <label>Password</label>
+							                                            <input class="form-control form-control-sm" type="text"
+							                                               id="uPass" >
+							                                        </div>
+							                                        </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button"
+                                                                        class="btn btn-light-secondary"
+                                                                        data-bs-dismiss="modal">
+                                                                        <i class="bx bx-x d-block d-sm-none"></i>
+                                                                        <span class="d-none d-sm-block">Close</span>
+                                                                    </button>
+                                                                    <button type="button" class="btn btn-danger ml-1"
+                                                                        data-bs-dismiss="modal" onclick="addUnion()">
+                                                                        <i class="bx bx-check d-block d-sm-none"></i>
+                                                                        <span class="d-none d-sm-block">Authenticate Manager</span>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    
+                                                     <div class="modal fade text-left" id="field" tabindex="-1"
+                                                        role="dialog" aria-labelledby="myModalLabel120"
+                                                        aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+                                                            role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header bg-danger">
+                                                                    <h5 class="modal-title white" id="myModalLabel120">
+                                                                        Add a Field Staff
+                                                                    </h5>
+                                                                    <button type="button" class="close"
+                                                                        data-bs-dismiss="modal" aria-label="Close">
+                                                                        <i data-feather="x"></i>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                  <div class="row">
+                                                                      <div class="form-group floating-label col-md-6 mb-3">
+																			<label for="" class="mt-1">Select Union</label>
+																				<select name="driver" id="fUnion" class="choices form-select">
+																				<%
+																				    String sql5="Select * from union1";
+																				    
+																					 st = con.createStatement();
+																					 rst = st.executeQuery(sql5);
+																					while(rst.next()){
+																				%>
+																						<option ><%=rst.getString("unionName")%></option>
+																				<%} %>
+																					
+																				</select> 
+																			</div>
+							                                        
+							                                        
+							                                        <div class="form-group floating-label col-md-6 mb-3">
+																			<label for="" class="mt-1">Select Branch</label>
+																				<select name="driver" id="fbranch" class="choices form-select">
+																				<%
+																				    String sql6="Select * from branch";
+																					 st = con.createStatement();
+																					 rst = st.executeQuery(sql6);
+																					while(rst.next()){
+																				%>
+																						<option ><%=rst.getString("branchName")%></option>
+																				<%} %>
+																					
+																				</select> 
+																			</div>
+							                                        
+							                                     <div class="col-sm-6">
+							                                            <label>Staff's Name</label>
+							                                            <input class="form-control form-control-sm" type="text"
+							                                                id="staff">
+							                                        </div>
+							                                        
+							                                        <div class="col-sm-6">
+							                                            <label>Password</label>
+							                                            <input class="form-control form-control-sm" type="text"
+							                                                id="staffPass">
+							                                        </div>
+							                                        </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button"
+                                                                        class="btn btn-light-secondary"
+                                                                        data-bs-dismiss="modal">
+                                                                        <i class="bx bx-x d-block d-sm-none"></i>
+                                                                        <span class="d-none d-sm-block">Close</span>
+                                                                    </button>
+                                                                    <button type="button" class="btn btn-danger ml-1"
+                                                                        data-bs-dismiss="modal" onclick="addFieldStaff()">
+                                                                        <i class="bx bx-check d-block d-sm-none"></i>
+                                                                        <span class="d-none d-sm-block">add Staff</span>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    
+                                                     <div class="modal fade text-left" id="branch" tabindex="-1"
+                                                        role="dialog" aria-labelledby="myModalLabel120"
+                                                        aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+                                                            role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header bg-danger">
+                                                                    <h5 class="modal-title white" id="myModalLabel120">
+                                                                        Add Branch Manager
+                                                                    </h5>
+                                                                    <button type="button" class="close"
+                                                                        data-bs-dismiss="modal" aria-label="Close">
+                                                                        <i data-feather="x"></i>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                  <div class="row">
+                                                                   
+							                                        
+							                                        <div class="form-group floating-label col-md-6 mb-3">
+																			<label for="" class="mt-1">Select Union</label>
+																				<select name="driver" id="bUnion" class="choices form-select">
+																				<%
+																				    String sql4="Select * from union1";
+																				    
+																					 st = con.createStatement();
+																					 rst = st.executeQuery(sql4);
+																					while(rst.next()){
+																				%>
+																						<option ><%=rst.getString("unionName")%></option>
+																				<%} %>
+																					
+																				</select> 
+																			</div>
+							                                        
+							                                        
+							                                        <div class="form-group floating-label col-md-6 mb-3">
+																			<label for="" class="mt-1">Select Branch</label>
+																				<select name="driver" id="bBranch" class="choices form-select">
+																				<%
+																				    String sql1="Select * from branch";
+																				    
+																					 st = con.createStatement();
+																					 rst = st.executeQuery(sql1);
+																					while(rst.next()){
+																				%>
+																						<option ><%=rst.getString("branchName")%></option>
+																				<%} %>
+																					
+																				</select> 
+																			</div>
+																			
+																  <div class="col-sm-6">
+							                                            <label>Manager's Name</label>
+							                                            <input class="form-control form-control" type="text"
+							                                                id="bName" required>
+							                                        </div>
+							                                        
+							                                        <div class="col-sm-6">
+							                                            <label>Password</label>
+							                                            <input class="form-control form-control-sm" type="text"
+							                                            id="bpass" required>
+							                                        </div>
+							                                        </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button"
+                                                                        class="btn btn-light-secondary"
+                                                                        data-bs-dismiss="modal">
+                                                                        <i class="bx bx-x d-block d-sm-none"></i>
+                                                                        <span class="d-none d-sm-block">Close</span>
+                                                                    </button>
+                                                                    <button type="button" class="btn btn-danger ml-1"
+                                                                        data-bs-dismiss="modal" onclick="addBranch()">
+                                                                        <i class="bx bx-check d-block d-sm-none"></i>
+                                                                        <span class="d-none d-sm-block">Authenticate Branch Manager</span>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+													   <%
+													     String dash = branch;
+													     String dashPage="";
+													     String admin = "adminDashboard.jsp";
+													     String union1 = "unionDashboard.jsp";
+													     String branch1 = "BranchDashboard.jsp";
+													     
+													       if(dash.equals("admin")){
+													       	dashPage = admin;
+													       }else if(dash.equals("union")){
+													       	dashPage = union1;
+													       	
+													       }else{
+													       	dashPage = branch1;
+													       }
+													     
+													     %>
 
-                    <div class="col-sm-4">
-                        <label>Branch</label>
-                        <input class="form-control form-control-sm" type="text"
-                               placeholder="Small Input">
-                    </div>
+														<div class="preloader">
+														    <div class="loader">
+														        <div class="loader-outter"></div>
+														        <div class="loader-inner"></div>
+														
+														        <div class="indicator"> 
+														            <svg width="16px" height="12px">
+														                <polyline id="back" points="1 6 4 6 6 11 10 1 12 6 15 6"></polyline>
+														                <polyline id="front" points="1 6 4 6 6 11 10 1 12 6 15 6"></polyline>
+														            </svg>
+														        </div>
+														    </div>
+														</div>
+													<script src="jquery-3.6.0.js" type="text/javascript"></script>
+													<script src="component/jquery/jquery.min.js" type="text/javascript"></script>
+													<script src="component/jquery.validate.min.js" type="text/javascript"></script>
+													<script type="text/javascript">
+													
+													$(window).on('load', function() {
+													    //for use in production please remove this setTimeOut
+													    setTimeout(function(){ 
+													        $('.preloader').addClass('preloader-deactivate');
+													    }, 30);
+													    //uncomment this line for use this snippet in production
+													    //	$('.preloader').addClass('preloader-deactivate');
+													});
+													
+													
+													trip();
+													income();
+													tUnion();
+													tBranch();
+													tVehicles();
+													tDrivers();
+													tStations();
+													tUncompleted();
+													function addUnion(){
+											        	  
+													       alert("add called...."); 
+											        	  $.ajax({
+											        		  
+											        		  type:"POST",
+											        		  url:"calData.jsp",
+											        		  data:{"union":$("#unionM").val(),"name":$("#mName").val(),"pass":$("#uPass").val(),"option":'addunion'},
+											        		 
+											        			  /*------------------------------------   Ajax call area  ------------------------------------------------*/
+											        		  success:function(msg){
+											        			  var obj = JSON.parse(msg);
+											        			  var notification = alertify.notify('Success', 'success', 5, function(){  console.log('dismissed'); }); alertify.set('notifier','position', 'top-right');
+											        			  
+											        		  },
+											        		  error(err){
+											        			  alertify.error('Error');
+											        		  }
+											        		  
+											        		  
+											        	  })
+											        	  
+											          }
+													
+													function addBranch(){
+											        	  
+													       alert("add called...."); 
+													       $.ajax({
+												        		  
+												        		  type:"POST",
+												        		  url:"calData.jsp",
+												        		  data:{"bBranch":$("#bBranch").val(),"name":$("#bName").val(),"union":$("#bUnion").val(),"pass":$("#bpass").val(),"option":'addbranchM'},
+												        		 
+												        			  /*------------------------------------   Ajax call area  ------------------------------------------------*/
+												        		  success:function(msg){
+												        			  var obj = JSON.parse(msg);
+												        			  var notification = alertify.notify('Success', 'success', 5, function(){  console.log('dismissed'); }); alertify.set('notifier','position', 'top-right');
+												        			  
+												        		  },
+												        		  error(err){
+												        			  alertify.error('Error');
+												        		  }
+												        		  
+												        		  
+												        	  })
+											        	  
+											          }
+													
+													function addFieldStaff(){
+											        	  
+													       alert("add called...."); 
+													       $.ajax({
+												        		  
+												        		  type:"POST",
+												        		  url:"calData.jsp",
+												        		  data:{"union":$("#fUnion").val(),"branch":$("#fbranch").val(),"name":$("#staff").val(),"pass":$("#staffPass").val(),"option":'addstaff'},
+												        		 
+												        			  /*------------------------------------   Ajax call area  ------------------------------------------------*/
+												        		  success:function(msg){
+												        			  var obj = JSON.parse(msg);
+												        			  var notification = alertify.notify('Success', 'success', 5, function(){  console.log('dismissed'); }); alertify.set('notifier','position', 'top-right');
+												        			  
+												        		  },
+												        		  error(err){
+												        			  alertify.error('Error');
+												        		  }
+												        		  
+												        		  
+												        	  })
+											        	  
+											          }
+													
+													
+													
+													
+													
+													function trip(){
+									            		 $.ajax({
+											        		  type:"GET",
+											        		  url:"test.jsp",
+											        		  data:{"option":'adminM'},
+											        		 
+											        			  /*------------------------------------   Ajax call area  ------------------------------------------------*/
+											        		  success:function(msg){
+											        			  var obj = JSON.parse(msg);
+											        			  var datapoints = obj[0].dataPoints;
+											        			  
+											        			  alert(datapoints);
+											        			  var options = {
+											        					  chart: {
+											        					      height: 350,
+											        					      type: 'bar',
+											        					  },
+											        					  dataLabels: {
+											        					      enabled: false
+											        					  },
+											        					  series: [],
+											        					  colors: '#435ebe',
+											        					  noData: {
+											        					    text: 'Loading...'
+											        					  }
+											        					}
 
-                    <div class="col-sm-4">
-                        <label>Password</label>
-                        <input class="form-control form-control-sm" type="text"
-                               placeholder="Small Input">
-                    </div>
+											        					var chart = new ApexCharts(
+											        					  document.querySelector("#chart"),
+											        					  options
+											        					);
+
+											        					chart.render();
+											        					
+											        					var url = 'NewFile.jsp';
+
+											        					$.getJSON(url, function(response) {
+											        					  chart.updateSeries([{
+											        					    name: 'Trips',
+											        					    data: response
+											        					  }])
+											        					});
+
+											        		  },
+											        		  error(err){
+											        			  alertify.error(' an error occured');
+											        		  }
+											        		  
+											        		  
+											        	  })
+									            	 }
+													
+													
+													function income(){
+									            		 $.ajax({
+											        		  type:"GET",
+											        		  url:"test.jsp",
+											        		  data:{"option":'adminIncome'},
+											        		 
+											        			  /*------------------------------------   Ajax call area  ------------------------------------------------*/
+											        		  success:function(msg){
+											        			  var obj = JSON.parse(msg);
+											        			  var datapoints = obj[0].dataPoints;
+											        			  
+											        			  alert(datapoints);
+											        			  var options = {
+											        					  chart: {
+											        					      height: 350,
+											        					      type: 'bar',
+											        					  },
+											        					  dataLabels: {
+											        					      enabled: false
+											        					  },
+											        					  series: [],
+											        					  colors: '#435ebe',
+											        					  noData: {
+											        					    text: 'Loading...'
+											        					  }
+											        					}
+
+											        					var chart = new ApexCharts(
+											        					  document.querySelector("#chart1"),
+											        					  options
+											        					);
+
+											        					chart.render();
+											        					
+											        					var url = 'adminIncome.jsp';
+
+											        					$.getJSON(url, function(response) {
+											        					  chart.updateSeries([{
+											        					    name: 'Income',
+											        					    data: response
+											        					  }])
+											        					});
+
+											        		  },
+											        		  error(err){
+											        			  alertify.error(' an error occured');
+											        		  }
+											        		  
+											        		  
+											        	  })
+									            	 }
+													
+													/////////////////////   tiles data /////////////////////////////////////////////
+													
+													function tUnion(){
+								            		 $.ajax({
+										        		  type:"GET",
+										        		  url:"test.jsp",
+										        		  data:{"option":'countU'},
+										        		 
+										        			  /*------------------------------------   Ajax call area  ------------------------------------------------*/
+										        		  success:function(msg){
+										        			  
+										        			  var obj = JSON.parse(msg);
+										        			
+										        				 //  var notification = alertify.notify('ID Exists', 'success', 5, function(){  console.log('dismissed'); }); alertify.set('notifier','position', 'top-right');
+										        				 // $("#seat").val(obj[0].seatForU);
+										        			  $("#uni").html(obj[0].totalU);
+										        			  $("#un1").html(obj[0].totalU);
+											        			 
+										        			  
+										        		  },
+										        		  error(err){
+										        			  alertify.error(' an error occured');
+										        		  }
+										        		  
+										        		  
+										        	  })
+								            	 }
+													
+													function tBranch(){
+									            		 $.ajax({
+											        		  type:"GET",
+											        		  url:"test.jsp",
+											        		  data:{"option":'tBranch'},
+											        		 
+											        			  /*------------------------------------   Ajax call area  ------------------------------------------------*/
+											        		  success:function(msg){
+											        			  
+											        			  var obj = JSON.parse(msg);
+											        			
+											        				  // var notification = alertify.notify('ID Exists', 'success', 5, function(){  console.log('dismissed'); }); alertify.set('notifier','position', 'top-right');
+											        			  $("#bra").html(obj[0].totalB);
+												        			 
+											        			  
+											        		  },
+											        		  error(err){
+											        			  alertify.error(' an error occured');
+											        		  }
+											        		  
+											        		  
+											        	  })
+									            	 }
+													
+													function tVehicles(val){
+									            		 $.ajax({
+											        		  type:"GET",
+											        		  url:"test.jsp",
+											        		  data:{"option":'tVehicles'},
+											        		 
+											        			  /*------------------------------------   Ajax call area  ------------------------------------------------*/
+											        		  success:function(msg){
+											        			  
+											        			  var obj = JSON.parse(msg);
+											        			
+											        				 //   var notification = alertify.notify('ID Exists', 'success', 5, function(){  console.log('dismissed'); }); alertify.set('notifier','position', 'top-right');
+											        			  $("#vehi").html(obj[0].totalV);
+												        			 
+											        			  
+											        		  },
+											        		  error(err){
+											        			  alertify.error(' an error occured');
+											        		  }
+											        		  
+											        		  
+											        	  })
+									            	 }
+													
+													function tDrivers(){
+									            		 $.ajax({
+											        		  type:"GET",
+											        		  url:"test.jsp",
+											        		  data:{"option":'tDrivers'},
+											        		 
+											        			  /*------------------------------------   Ajax call area  ------------------------------------------------*/
+											        		  success:function(msg){
+											        			  
+											        			  var obj = JSON.parse(msg);
+											        			
+											        				 //  var notification = alertify.notify('ID Exists', 'success', 5, function(){  console.log('dismissed'); }); alertify.set('notifier','position', 'top-right');
+											        			  $("#dri").html(obj[0].totalDri);
+												        			 
+											        			  
+											        		  },
+											        		  error(err){
+											        			  alertify.error(' an error occured');
+											        		  }
+											        		  
+											        		  
+											        	  })
+									            	 }
+													
+													function tStations(){
+									            		 $.ajax({
+											        		  type:"GET",
+											        		  url:"test.jsp",
+											        		  data:{"option":'tStations'},
+											        		 
+											        			  /*------------------------------------   Ajax call area  ------------------------------------------------*/
+											        		  success:function(msg){
+											        			  
+											        			  var obj = JSON.parse(msg);
+											        			
+											        				  // var notification = alertify.notify('ID Exists', 'success', 5, function(){  console.log('dismissed'); }); alertify.set('notifier','position', 'top-right');
+											        				 
+											        				  $("#stat").html(obj[0].totalSta);
+											        				  $("#stat1").html(obj[0].totalSta);
+												        			 
+											        			  
+											        		  },
+											        		  error(err){
+											        			  alertify.error(' an error occured');
+											        		  }
+											        		  
+											        		  
+											        	  })
+									            	 }
+													
+													function tStaffs(){
+									            		 $.ajax({
+											        		  type:"GET",
+											        		  url:"calData.jsp",
+											        		  data:{"seat" :val,"option":'seat'},
+											        		 
+											        			  /*------------------------------------   Ajax call area  ------------------------------------------------*/
+											        		  success:function(msg){
+											        			  
+											        			  var obj = JSON.parse(msg);
+											        			
+											        				  // var notification = alertify.notify('ID Exists', 'success', 5, function(){  console.log('dismissed'); }); alertify.set('notifier','position', 'top-right');
+											        				  $("#seat").val(obj[0].seatForU);
+												        			 
+											        			  
+											        		  },
+											        		  error(err){
+											        			  alertify.error(' an error occured');
+											        		  }
+											        		  
+											        		  
+											        	  })
+									            	 }
+													
+													function tBranchM(){
+									            		 $.ajax({
+											        		  type:"GET",
+											        		  url:"calData.jsp",
+											        		  data:{"seat" :val,"option":'seat'},
+											        		 
+											        			  /*------------------------------------   Ajax call area  ------------------------------------------------*/
+											        		  success:function(msg){
+											        			  
+											        			  var obj = JSON.parse(msg);
+											        			
+											        				 //  var notification = alertify.notify('ID Exists', 'success', 5, function(){  console.log('dismissed'); }); alertify.set('notifier','position', 'top-right');
+											        				  $("#seat").val(obj[0].seatForU);
+												        			 
+											        			  
+											        		  },
+											        		  error(err){
+											        			  alertify.error(' an error occured');
+											        		  }
+											        		  
+											        		  
+											        	  })
+									            	 }
+													function tSuper(){
+									            		 $.ajax({
+											        		  type:"GET",
+											        		  url:"calData.jsp",
+											        		  data:{"seat" :val,"option":'seat'},
+											        		 
+											        			  /*------------------------------------   Ajax call area  ------------------------------------------------*/
+											        		  success:function(msg){
+											        			  
+											        			  var obj = JSON.parse(msg);
+											        			
+											        				 //  var notification = alertify.notify('ID Exists', 'success', 5, function(){  console.log('dismissed'); }); alertify.set('notifier','position', 'top-right');
+											        				  $("#seat").val(obj[0].seatForU);
+												        			 
+											        			  
+											        		  },
+											        		  error(err){
+											        			  alertify.error(' an error occured');
+											        		  }
+											        		  
+											        		  
+											        	  })
+									            	 }
+													
+													function tUncompleted(){
+									            		 $.ajax({
+											        		  type:"GET",
+											        		  url:"test.jsp",
+											        		  data:{"option":'tUncompleted'},
+											        		 
+											        			  /*------------------------------------   Ajax call area  ------------------------------------------------*/
+											        		  success:function(msg){
+											        			  
+											        			  var obj = JSON.parse(msg);
+											        			
+											        				 //  var notification = alertify.notify('ID Exists', 'success', 5, function(){  console.log('dismissed'); }); alertify.set('notifier','position', 'top-right');
+											        			  $("#uncomp").html(obj[0].totalUnc);
+												        			 
+											        			  
+											        		  },
+											        		  error(err){
+											        			  alertify.error(' an error occured');
+											        		  }
+											        		  
+											        		  
+											        	  })
+									            	 }
+													
+													function logOut(){
+														alert("Logging out ............");
+														
+														$.ajax({
+											        		  
+											        		  type:"POST",
+											        		  url:"logOut",
+											        		  data:{"myid" :ids},
+											        		  
+											        		  success:function(msg){
+											        			  var obj = JSON.parse(msg);
+											        			
+											        			
+											        			  
+											        		  },
+											        		  error(err){
+											        			  alertify.error('Error');
+											        		  }
+											        		  
+											        		  
+											        	  })
+													}
+													
+							                    	/////////////////////   tiles data /////////////////////////////////////////////
+											
+													</script>
+
+
+										    <div id="app">
+										 <!-- start side bar -->
+										    
+										        <div id="sidebar" class="active">
+										            <div class="sidebar-wrapper active">
+										                <div class="sidebar-header">
+										                    <div class="d-flex justify-content-between">
+										                        <div class="logo">
+										                            <a href="index.html"><img src="assets/images/profile.jpg" alt="Logo" srcset="" style="width:150px; height:120px;" ></a>
+										                        </div>
+										                        <div class="toggler">
+										                            <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+										                        </div>
+										                    </div>
+										                </div>
+							                <div class="sidebar-menu">
+							                    <ul class="menu">
+							                        <li class="sidebar-title">Menu</li>
+							
+							                        <li class="sidebar-item  ">
+							                        
+							                            <a href="<% out.println(dashPage);%>" class='sidebar-link'>
+							                                <i class="bi bi-grid-fill"></i>
+							                                <span>Dashboard</span>
+							                            </a>
+							                        </li>
+                      
+						                      <li class="sidebar-item  ">
+						                            <a href="station.jsp" class='sidebar-link'>
+						                                <i class="bi bi-globe2"></i>
+						                                
+						                                <span>Branches</span>
+						                            </a>
+						                        </li>
+
+                         <li class="sidebar-item  ">
+                            <a href="vehicles.jsp" class='sidebar-link'>
+                                <i class="bi bi-truck"></i>
+                                <span>Vehicles</span>
+                            </a>
+                        </li>
+
+                         <li class="sidebar-item  ">
+                            <a href="drivers.jsp" class='sidebar-link'>
+                                <i class="bi bi-person"></i>
+                                <span>Drivers</span>
+                            </a>
+                        </li>
+
+
+                        <li class="sidebar-item  ">
+                            <a href="trips.jsp" class='sidebar-link'>
+                                <i class="bi bi-map"></i>
+                                <span>Trips</span>
+                            </a>
+                        </li>
+
+                    
+
+                        <li class="sidebar-item  ">
+                            <a href="passengers.jsp" class='sidebar-link'>
+                                <i class="bi bi-person-check-fill"></i>
+                                <span>Passengers</span>
+                            </a>
+                        </li>
+
+                  
+                        <li class="sidebar-item  ">
+                            <a href="booking.jsp" class='sidebar-link'>
+                                <i class="bi bi-file-earmark-spreadsheet-fill"></i>
+                                <span>Bookings</span>
+                            </a>
+                        </li>
+                        
+                        <li class="sidebar-item  ">
+                            <a href="union.jsp" class='sidebar-link'>
+                                <i class="bi bi-people"></i>
+                                <span>Union</span>
+                            </a>
+                        </li>
+
+
+                    </ul>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button"
-                        class="btn btn-light-secondary"
-                        data-bs-dismiss="modal">
-                    <i class="bx bx-x d-block d-sm-none"></i>
-                    <span class="d-none d-sm-block">Close</span>
-                </button>
-                <button type="button" class="btn btn-danger ml-1"
-                        data-bs-dismiss="modal">
-                    <i class="bx bx-check d-block d-sm-none"></i>
-                    <span class="d-none d-sm-block">Reset</span>
-                </button>
+                <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
             </div>
         </div>
-    </div>
-</div>
+        
+        <!-- end side bar -->
+        <div id="main">
+            <header class="mb-3">
+                <a href="#" class="burger-btn d-block d-xl-none">
+                    <i class="bi bi-justify fs-3"></i>
+                </a>
+            </header>
 
-<div class="modal fade text-left" id="union" tabindex="-1"
-     role="dialog" aria-labelledby="myModalLabel120"
-     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
-         role="document">
-        <div class="modal-content">
-            <div class="modal-header bg-danger">
-                <h5 class="modal-title white">
-                    Authenticate Union Manager
-                </h5>
-                <button type="button" class="close"
-                        data-bs-dismiss="modal" aria-label="Close">
-                    <i data-feather="x"></i>
-                </button>
+            <div class="page-heading">
+                <h3>Admin Dashboard</h3>
             </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="form-group floating-label col-md-6 mb-3">
-                        <label  class="mt-1">Select Union</label>
-                        <select name="driver" id="unionM" class="choices form-select">
-                            <%
-                                String sql="Select * from union1";
-
-                                ResultSet rst = st.executeQuery(sql);
-                                while(rst.next()){
-                            %>
-                            <option ><%=rst.getString("unionName")%></option>
-                            <%} %>
-
-                        </select>
-                    </div>
-
-                    <div class="col-sm-6">
-                        <label>Manager's Name</label>
-                        <input class="form-control form-control" type="text"
-                               id="mName" required>
-                    </div>
-
-                    <div class="col-sm-12">
-                        <label>Password</label>
-                        <input class="form-control form-control-sm" type="text"
-                               id="uPass" >
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button"
-                        class="btn btn-light-secondary"
-                        data-bs-dismiss="modal">
-                    <i class="bx bx-x d-block d-sm-none"></i>
-                    <span class="d-none d-sm-block">Close</span>
-                </button>
-                <button type="button" class="btn btn-danger ml-1"
-                        data-bs-dismiss="modal" onclick="addUnion()">
-                    <i class="bx bx-check d-block d-sm-none"></i>
-                    <span class="d-none d-sm-block">Authenticate Manager</span>
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="modal fade text-left" id="field" tabindex="-1"
-     role="dialog" aria-labelledby="myModalLabel120"
-     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
-         role="document">
-        <div class="modal-content">
-            <div class="modal-header bg-danger">
-                <h5 class="modal-title white">
-                    Add a Field Staff
-                </h5>
-                <button type="button" class="close"
-                        data-bs-dismiss="modal" aria-label="Close">
-                    <i data-feather="x"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="form-group floating-label col-md-6 mb-3">
-                        <label  class="mt-1">Select Union</label>
-                        <select name="driver" id="fUnion" class="choices form-select">
-                            <%
-                                String sql5="Select * from union1";
-
-                                st = con.createStatement();
-                                rst = st.executeQuery(sql5);
-                                while(rst.next()){
-                            %>
-                            <option ><%=rst.getString("unionName")%></option>
-                            <%} %>
-
-                        </select>
-                    </div>
-
-
-                    <div class="form-group floating-label col-md-6 mb-3">
-                        <label class="mt-1">Select Branch</label>
-                        <select name="driver" id="fbranch" class="choices form-select">
-                            <%
-                                String sql6="Select * from branch";
-                                st = con.createStatement();
-                                rst = st.executeQuery(sql6);
-                                while(rst.next()){
-                            %>
-                            <option ><%=rst.getString("branchName")%></option>
-                            <%} %>
-
-                        </select>
-                    </div>
-
-                    <div class="col-sm-6">
-                        <label>Staff's Name</label>
-                        <input class="form-control form-control-sm" type="text"
-                               id="staff">
-                    </div>
-
-                    <div class="col-sm-6">
-                        <label>Password</label>
-                        <input class="form-control form-control-sm" type="text"
-                               id="staffPass">
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button"
-                        class="btn btn-light-secondary"
-                        data-bs-dismiss="modal">
-                    <i class="bx bx-x d-block d-sm-none"></i>
-                    <span class="d-none d-sm-block">Close</span>
-                </button>
-                <button type="button" class="btn btn-danger ml-1"
-                        data-bs-dismiss="modal" onclick="addFieldStaff()">
-                    <i class="bx bx-check d-block d-sm-none"></i>
-                    <span class="d-none d-sm-block">add Staff</span>
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="modal fade text-left" id="branch" tabindex="-1"
-     role="dialog" aria-labelledby="myModalLabel120"
-     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
-         role="document">
-        <div class="modal-content">
-            <div class="modal-header bg-danger">
-                <h5 class="modal-title white" id="myModalLabel120">
-                    Add Branch Manager
-                </h5>
-                <button type="button" class="close"
-                        data-bs-dismiss="modal" aria-label="Close">
-                    <i data-feather="x"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-
-
-                    <div class="form-group floating-label col-md-6 mb-3">
-                        <label  class="mt-1">Select Union</label>
-                        <select name="driver" id="bUnion" class="choices form-select">
-                            <%
-                                String sql4="Select * from union1";
-
-                                st = con.createStatement();
-                                rst = st.executeQuery(sql4);
-                                while(rst.next()){
-                            %>
-                            <option ><%=rst.getString("unionName")%></option>
-                            <%} %>
-
-                        </select>
-                    </div>
-
-
-                    <div class="form-group floating-label col-md-6 mb-3">
-                        <label  class="mt-1">Select Branch</label>
-                        <select name="driver" id="bBranch" class="choices form-select">
-                            <%
-                                String sql1="Select * from branch";
-
-                                st = con.createStatement();
-                                rst = st.executeQuery(sql1);
-                                while(rst.next()){
-                            %>
-                            <option ><%=rst.getString("branchName")%></option>
-                            <%} %>
-
-                        </select>
-                    </div>
-
-                    <div class="col-sm-6">
-                        <label>Manager's Name</label>
-                        <input class="form-control form-control" type="text"
-                               id="bName" required>
-                    </div>
-
-                    <div class="col-sm-6">
-                        <label>Password</label>
-                        <input class="form-control form-control-sm" type="text"
-                               id="bpass" required>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button"
-                        class="btn btn-light-secondary"
-                        data-bs-dismiss="modal">
-                    <i class="bx bx-x d-block d-sm-none"></i>
-                    <span class="d-none d-sm-block">Close</span>
-                </button>
-                <button type="button" class="btn btn-danger ml-1"
-                        data-bs-dismiss="modal" onclick="addBranch()">
-                    <i class="bx bx-check d-block d-sm-none"></i>
-                    <span class="d-none d-sm-block">Authenticate Branch Manager</span>
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-<%
-    String dash = branch;
-    String dashPage="";
-    String admin = "adminDashboard.jsp";
-    String union1 = "unionDashboard.jsp";
-    String branch1 = "BranchDashboard.jsp";
-
-    if(dash.equals("admin")){
-        dashPage = admin;
-    }else if(dash.equals("union")){
-        dashPage = union1;
-
-    }else{
-        dashPage = branch1;
-    }
-
-%>
-
-<div class="preloader">
-    <div class="loader">
-        <div class="loader-outter"></div>
-        <div class="loader-inner"></div>
-
-        <div class="indicator">
-            <svg width="16px" height="12px">
-                <polyline id="back" points="1 6 4 6 6 11 10 1 12 6 15 6"></polyline>
-                <polyline id="front" points="1 6 4 6 6 11 10 1 12 6 15 6"></polyline>
-            </svg>
-        </div>
-    </div>
-</div>
-<script src="jquery-3.6.0.js" type="text/javascript"></script>
-<script src="component/jquery/jquery.min.js" type="text/javascript"></script>
-<script src="component/jquery.validate.min.js" type="text/javascript"></script>
-<script type="text/javascript">
-
-    $(window).on('load', function() {
-        //for use in production please remove this setTimeOut
-        setTimeout(function(){
-            $('.preloader').addClass('preloader-deactivate');
-        }, 30);
-        //uncomment this line for use this snippet in production
-        //	$('.preloader').addClass('preloader-deactivate');
-    });
-
-
-    trip();
-    income();
-    tUnion();
-    tBranch();
-    tVehicles();
-    tDrivers();
-    tStations();
-    tUncompleted();
-    function addUnion(){
-
-        alert("add called....");
-        $.ajax({
-
-            type:"POST",
-            url:"calData.jsp",
-            data:{"union":$("#unionM").val(),"name":$("#mName").val(),"pass":$("#uPass").val(),"option":'addunion'},
-
-            /*------------------------------------   Ajax call area  ------------------------------------------------*/
-            success:function(msg){
-                var obj = JSON.parse(msg);
-                var notification = alertify.notify('Success', 'success', 5, function(){  console.log('dismissed'); }); alertify.set('notifier','position', 'top-right');
-
-            },
-            error(err){
-                alertify.error('Error');
-            }
-
-
-        })
-
-    }
-
-    function addBranch(){
-
-        alert("add called....");
-        $.ajax({
-
-            type:"POST",
-            url:"calData.jsp",
-            data:{"bBranch":$("#bBranch").val(),"name":$("#bName").val(),"union":$("#bUnion").val(),"pass":$("#bpass").val(),"option":'addbranchM'},
-
-            /*------------------------------------   Ajax call area  ------------------------------------------------*/
-            success:function(msg){
-                var obj = JSON.parse(msg);
-                var notification = alertify.notify('Success', 'success', 5, function(){  console.log('dismissed'); }); alertify.set('notifier','position', 'top-right');
-
-            },
-            error(err){
-                alertify.error('Error');
-            }
-
-
-        })
-
-    }
-
-    function addFieldStaff(){
-
-        alert("add called....");
-        $.ajax({
-
-            type:"POST",
-            url:"calData.jsp",
-            data:{"union":$("#fUnion").val(),"branch":$("#fbranch").val(),"name":$("#staff").val(),"pass":$("#staffPass").val(),"option":'addstaff'},
-
-            /*------------------------------------   Ajax call area  ------------------------------------------------*/
-            success:function(msg){
-                var obj = JSON.parse(msg);
-                var notification = alertify.notify('Success', 'success', 5, function(){  console.log('dismissed'); }); alertify.set('notifier','position', 'top-right');
-
-            },
-            error(err){
-                alertify.error('Error');
-            }
-
-
-        })
-
-    }
-
-
-
-
-
-    function trip(){
-        $.ajax({
-            type:"GET",
-            url:"test.jsp",
-            data:{"option":'adminM'},
-
-            /*------------------------------------   Ajax call area  ------------------------------------------------*/
-            success:function(msg){
-                var obj = JSON.parse(msg);
-                var datapoints = obj[0].dataPoints;
-
-                alert(datapoints);
-                var options = {
-                    chart: {
-                        height: 350,
-                        type: 'bar',
-                    },
-                    dataLabels: {
-                        enabled: false
-                    },
-                    series: [],
-                    colors: '#435ebe',
-                    noData: {
-                        text: 'Loading...'
-                    }
-                }
-
-                var chart = new ApexCharts(
-                    document.querySelector("#chart"),
-                    options
-                );
-
-                chart.render();
-
-                var url = 'NewFile.jsp';
-
-                $.getJSON(url, function(response) {
-                    chart.updateSeries([{
-                        name: 'Trips',
-                        data: response
-                    }])
-                });
-
-            },
-            error(err){
-                alertify.error(' an error occured');
-            }
-
-
-        })
-    }
-
-
-    function income(){
-        $.ajax({
-            type:"GET",
-            url:"test.jsp",
-            data:{"option":'adminIncome'},
-
-            /*------------------------------------   Ajax call area  ------------------------------------------------*/
-            success:function(msg){
-                var obj = JSON.parse(msg);
-                var datapoints = obj[0].dataPoints;
-
-                alert(datapoints);
-                var options = {
-                    chart: {
-                        height: 350,
-                        type: 'bar',
-                    },
-                    dataLabels: {
-                        enabled: false
-                    },
-                    series: [],
-                    colors: '#435ebe',
-                    noData: {
-                        text: 'Loading...'
-                    }
-                }
-
-                var chart = new ApexCharts(
-                    document.querySelector("#chart1"),
-                    options
-                );
-
-                chart.render();
-
-                var url = 'adminIncome.jsp';
-
-                $.getJSON(url, function(response) {
-                    chart.updateSeries([{
-                        name: 'Income',
-                        data: response
-                    }])
-                });
-
-            },
-            error(err){
-                alertify.error(' an error occured');
-            }
-
-
-        })
-    }
-
-    /////////////////////   tiles data /////////////////////////////////////////////
-
-    function tUnion(){
-        $.ajax({
-            type:"GET",
-            url:"test.jsp",
-            data:{"option":'countU'},
-
-            /*------------------------------------   Ajax call area  ------------------------------------------------*/
-            success:function(msg){
-
-                var obj = JSON.parse(msg);
-
-                //  var notification = alertify.notify('ID Exists', 'success', 5, function(){  console.log('dismissed'); }); alertify.set('notifier','position', 'top-right');
-                // $("#seat").val(obj[0].seatForU);
-                $("#uni").html(obj[0].totalU);
-                $("#un1").html(obj[0].totalU);
-
-
-            },
-            error(err){
-                alertify.error(' an error occured');
-            }
-
-
-        })
-    }
-
-    function tBranch(){
-        $.ajax({
-            type:"GET",
-            url:"test.jsp",
-            data:{"option":'tBranch'},
-
-            /*------------------------------------   Ajax call area  ------------------------------------------------*/
-            success:function(msg){
-
-                var obj = JSON.parse(msg);
-
-                // var notification = alertify.notify('ID Exists', 'success', 5, function(){  console.log('dismissed'); }); alertify.set('notifier','position', 'top-right');
-                $("#bra").html(obj[0].totalB);
-
-
-            },
-            error(err){
-                alertify.error(' an error occured');
-            }
-
-
-        })
-    }
-
-    function tVehicles(val){
-        $.ajax({
-            type:"GET",
-            url:"test.jsp",
-            data:{"option":'tVehicles'},
-
-            /*------------------------------------   Ajax call area  ------------------------------------------------*/
-            success:function(msg){
-
-                var obj = JSON.parse(msg);
-
-                //   var notification = alertify.notify('ID Exists', 'success', 5, function(){  console.log('dismissed'); }); alertify.set('notifier','position', 'top-right');
-                $("#vehi").html(obj[0].totalV);
-
-
-            },
-            error(err){
-                alertify.error(' an error occured');
-            }
-
-
-        })
-    }
-
-    function tDrivers(){
-        $.ajax({
-            type:"GET",
-            url:"test.jsp",
-            data:{"option":'tDrivers'},
-
-            /*------------------------------------   Ajax call area  ------------------------------------------------*/
-            success:function(msg){
-
-                var obj = JSON.parse(msg);
-
-                //  var notification = alertify.notify('ID Exists', 'success', 5, function(){  console.log('dismissed'); }); alertify.set('notifier','position', 'top-right');
-                $("#dri").html(obj[0].totalDri);
-
-
-            },
-            error(err){
-                alertify.error(' an error occured');
-            }
-
-
-        })
-    }
-
-    function tStations(){
-        $.ajax({
-            type:"GET",
-            url:"test.jsp",
-            data:{"option":'tStations'},
-
-            /*------------------------------------   Ajax call area  ------------------------------------------------*/
-            success:function(msg){
-
-                var obj = JSON.parse(msg);
-
-                // var notification = alertify.notify('ID Exists', 'success', 5, function(){  console.log('dismissed'); }); alertify.set('notifier','position', 'top-right');
-
-                $("#stat").html(obj[0].totalSta);
-                $("#stat1").html(obj[0].totalSta);
-
-
-            },
-            error(err){
-                alertify.error(' an error occured');
-            }
-
-
-        })
-    }
-
-    function tStaffs(){
-        $.ajax({
-            type:"GET",
-            url:"calData.jsp",
-            data:{"seat" :val,"option":'seat'},
-
-            /*------------------------------------   Ajax call area  ------------------------------------------------*/
-            success:function(msg){
-
-                var obj = JSON.parse(msg);
-
-                // var notification = alertify.notify('ID Exists', 'success', 5, function(){  console.log('dismissed'); }); alertify.set('notifier','position', 'top-right');
-                $("#seat").val(obj[0].seatForU);
-
-
-            },
-            error(err){
-                alertify.error(' an error occured');
-            }
-
-
-        })
-    }
-
-    function tBranchM(){
-        $.ajax({
-            type:"GET",
-            url:"calData.jsp",
-            data:{"seat" :val,"option":'seat'},
-
-            /*------------------------------------   Ajax call area  ------------------------------------------------*/
-            success:function(msg){
-
-                var obj = JSON.parse(msg);
-
-                //  var notification = alertify.notify('ID Exists', 'success', 5, function(){  console.log('dismissed'); }); alertify.set('notifier','position', 'top-right');
-                $("#seat").val(obj[0].seatForU);
-
-
-            },
-            error(err){
-                alertify.error(' an error occured');
-            }
-
-
-        })
-    }
-    function tSuper(){
-        $.ajax({
-            type:"GET",
-            url:"calData.jsp",
-            data:{"seat" :val,"option":'seat'},
-
-            /*------------------------------------   Ajax call area  ------------------------------------------------*/
-            success:function(msg){
-
-                var obj = JSON.parse(msg);
-
-                //  var notification = alertify.notify('ID Exists', 'success', 5, function(){  console.log('dismissed'); }); alertify.set('notifier','position', 'top-right');
-                $("#seat").val(obj[0].seatForU);
-
-
-            },
-            error(err){
-                alertify.error(' an error occured');
-            }
-
-
-        })
-    }
-
-    function tUncompleted(){
-        $.ajax({
-            type:"GET",
-            url:"test.jsp",
-            data:{"option":'tUncompleted'},
-
-            /*------------------------------------   Ajax call area  ------------------------------------------------*/
-            success:function(msg){
-
-                var obj = JSON.parse(msg);
-
-                //  var notification = alertify.notify('ID Exists', 'success', 5, function(){  console.log('dismissed'); }); alertify.set('notifier','position', 'top-right');
-                $("#uncomp").html(obj[0].totalUnc);
-
-
-            },
-            error(err){
-                alertify.error(' an error occured');
-            }
-
-
-        })
-    }
-
-    function logOut(){
-        alert("Logging out ............");
-
-        $.ajax({
-
-            type:"POST",
-            url:"logOut",
-            data:{"myid" :ids},
-
-            success:function(msg){
-                var obj = JSON.parse(msg);
-
-
-
-            },
-            error(err){
-                alertify.error('Error');
-            }
-
-
-        })
-    }
-
-    /////////////////////   tiles data /////////////////////////////////////////////
-
-</script>
-
-
-<div id="app">
-    <!-- start side bar -->
-
-    <div id="sidebar" class="active">
-        <div class="sidebar-wrapper active">
-            <div class="sidebar-header">
-                <div class="d-flex justify-content-between">
-                    <div class="logo">
-                        <a href="index.html"><img src="assets/images/profile.jpg" alt="Logo" srcset="" style="width:150px; height:120px;" ></a>
-                    </div>
-                    <div class="toggler">
-                        <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="sidebar-menu">
-                <ul class="menu">
-                    <li class="sidebar-title">Menu</li>
-
-                    <li class="sidebar-item  ">
-
-                        <a href="<%--<% out.println(dashPage);%>--%> dashPage" class='sidebar-link'>
-                            <i class="bi bi-grid-fill"></i>
-                            <span>Dashboard</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-item  ">
-                        <a href="station.jsp" class='sidebar-link'>
-                            <i class="bi bi-globe2"></i>
-
-                            <span>Branches</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-item  ">
-                        <a href="vehicles.jsp" class='sidebar-link'>
-                            <i class="bi bi-truck"></i>
-                            <span>Vehicles</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-item  ">
-                        <a href="drivers.jsp" class='sidebar-link'>
-                            <i class="bi bi-person"></i>
-                            <span>Drivers</span>
-                        </a>
-                    </li>
-
-
-                    <li class="sidebar-item  ">
-                        <a href="trips.jsp" class='sidebar-link'>
-                            <i class="bi bi-map"></i>
-                            <span>Trips</span>
-                        </a>
-                    </li>
-
-
-
-                    <li class="sidebar-item  ">
-                        <a href="passengers.jsp" class='sidebar-link'>
-                            <i class="bi bi-person-check-fill"></i>
-                            <span>Passengers</span>
-                        </a>
-                    </li>
-
-
-                    <li class="sidebar-item  ">
-                        <a href="booking.jsp" class='sidebar-link'>
-                            <i class="bi bi-file-earmark-spreadsheet-fill"></i>
-                            <span>Bookings</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-item  ">
-                        <a href="union.jsp" class='sidebar-link'>
-                            <i class="bi bi-people"></i>
-                            <span>Union</span>
-                        </a>
-                    </li>
-
-
-                </ul>
-            </div>
-            <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
-        </div>
-    </div>
-
-    <!-- end side bar -->
-    <div id="main">
-        <header class="mb-3">
-            <a href="#" class="burger-btn d-block d-xl-none">
-                <i class="bi bi-justify fs-3"></i>
-            </a>
-        </header>
-
-        <div class="page-heading">
-            <h3>Admin Dashboard</h3>
-        </div>
-        <div class="page-content">
-            <section class="row">
-                <div class="col-12 col-lg-9">
-                    <div class="row">
-                        <div class="col-6 col-lg-3 col-md-6">
-                            <div class="card">
-                                <div class="card-body px-3 py-4-5">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="stats-icon purple">
-                                                <i class="iconly-boldShow"></i>
+            <div class="page-content">
+                <section class="row">
+                    <div class="col-12 col-lg-9">
+                        <div class="row">
+                            <div class="col-6 col-lg-3 col-md-6">
+                                <div class="card">
+                                    <div class="card-body px-3 py-4-5">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="stats-icon purple">
+                                                    <i class="iconly-boldShow"></i>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <h6 class="text-muted font-semibold">Total Union</h6>
-                                            <h4><div id="uni"></div></h4>
+                                            <div class="col-md-8">
+                                                <h6 class="text-muted font-semibold">Total Union</h6>
+                                                <h4><div id="uni"></div></h4>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-6 col-lg-3 col-md-6">
-                            <div class="card">
-                                <div class="card-body px-3 py-4-5">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="stats-icon blue">
-                                                <i class="iconly-boldProfile"></i>
+                            <div class="col-6 col-lg-3 col-md-6">
+                                <div class="card">
+                                    <div class="card-body px-3 py-4-5">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="stats-icon blue">
+                                                    <i class="iconly-boldProfile"></i>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <h6 class="text-muted font-semibold">Total Branches</h6>
-                                            <h4><div id="bra"></div></h4>
+                                            <div class="col-md-8">
+                                                <h6 class="text-muted font-semibold">Total Branches</h6>
+                                                <h4><div id="bra"></div></h4>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-
-                        <div class="col-6 col-lg-3 col-md-6">
-                            <div class="card">
-                                <div class="card-body px-3 py-4-5">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="stats-icon green">
-                                                <i class="iconly-boldBookmark"></i>
+                            
+                            
+                            <div class="col-6 col-lg-3 col-md-6">
+                                <div class="card">
+                                    <div class="card-body px-3 py-4-5">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="stats-icon green">
+                                                    <i class="iconly-boldBookmark"></i>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <h6 class="text-muted font-semibold">Total number of vehicles</h6>
-                                            <h4><div id="vehi"></div></h4>
+                                            <div class="col-md-8">
+                                                <h6 class="text-muted font-semibold">Total number of vehicles</h6>
+                                                <h4><div id="vehi"></div></h4>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-
-                        <div class="col-6 col-lg-3 col-md-6">
-                            <div class="card">
-                                <div class="card-body px-3 py-4-5">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="stats-icon orange">
-                                                <i class="iconly-boldBookmark"></i>
+                            
+                            
+                            <div class="col-6 col-lg-3 col-md-6">
+                                <div class="card">
+                                    <div class="card-body px-3 py-4-5">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="stats-icon orange">
+                                                    <i class="iconly-boldBookmark"></i>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <h6 class="text-muted font-semibold">Total number of Stations</h6>
-                                            <h4><div id="stat"></div></h4>
+                                            <div class="col-md-8">
+                                                <h6 class="text-muted font-semibold">Total number of Stations</h6>
+                                                <h4><div id="stat"></div></h4>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="col-6 col-lg-3 col-md-6">
-                            <div class="card">
-                                <div class="card-body px-3 py-4-5">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="stats-icon red">
-                                                <i class="iconly-boldBookmark"></i>
+                            
+                            <div class="col-6 col-lg-3 col-md-6">
+                                <div class="card">
+                                    <div class="card-body px-3 py-4-5">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="stats-icon red">
+                                                    <i class="iconly-boldBookmark"></i>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <h6 class="text-muted font-semibold">Total number of Staffs</h6>
-                                            <h6 class="font-extrabold mb-0">112</h6>
+                                            <div class="col-md-8">
+                                                <h6 class="text-muted font-semibold">Total number of Staffs</h6>
+                                                <h6 class="font-extrabold mb-0">112</h6>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="col-6 col-lg-3 col-md-6">
-                            <div class="card">
-                                <div class="card-body px-3 py-4-5">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="stats-icon yellow">
-                                                <i class="iconly-boldBookmark"></i>
+                            
+                            <div class="col-6 col-lg-3 col-md-6">
+                                <div class="card">
+                                    <div class="card-body px-3 py-4-5">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="stats-icon yellow">
+                                                    <i class="iconly-boldBookmark"></i>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <h6 class="text-muted font-semibold">Total Branch Managers</h6>
-                                            <h4><div id="stat1"></div></h4>
+                                            <div class="col-md-8">
+                                                <h6 class="text-muted font-semibold">Total Branch Managers</h6>
+                                                <h4><div id="stat1"></div></h4>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="col-6 col-lg-3 col-md-6">
-                            <div class="card">
-                                <div class="card-body px-3 py-4-5">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="stats-icon green">
-                                                <i class="iconly-boldBookmark"></i>
+                            
+                            <div class="col-6 col-lg-3 col-md-6">
+                                <div class="card">
+                                    <div class="card-body px-3 py-4-5">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="stats-icon green">
+                                                    <i class="iconly-boldBookmark"></i>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <h6 class="text-muted font-semibold">Total Union Supervisors</h6>
-                                            <h4><div id="un1"></div></h4>
+                                            <div class="col-md-8">
+                                                <h6 class="text-muted font-semibold">Total Union Supervisors</h6>
+                                                <h4><div id="un1"></div></h4>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="col-6 col-lg-3 col-md-6">
-                            <div class="card">
-                                <div class="card-body px-3 py-4-5">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="stats-icon blue">
-                                                <i class="iconly-boldBookmark"></i>
+                            
+                            <div class="col-6 col-lg-3 col-md-6">
+                                <div class="card">
+                                    <div class="card-body px-3 py-4-5">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="stats-icon blue">
+                                                    <i class="iconly-boldBookmark"></i>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <h6 class="text-muted font-semibold">Total Uncompleted Trips</h6>
-                                            <h4><div id="uncomp"></div></h4>
+                                            <div class="col-md-8">
+                                                <h6 class="text-muted font-semibold">Total Uncompleted Trips</h6>
+                                                <h4><div id="uncomp"></div></h4>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            
+                            
+                            
                         </div>
-
-
-
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4>Union Monthly Income</h4>
-                                </div>
-                                <div class="card-body">
-                                    <div id="chart1"></div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4>Union Monthly Income</h4>
+                                    </div>
+                                    <div class="card-body">
+                                         <div id="chart1"></div>
                                     <script src="assets/vendors/apexcharts/apexcharts.js"></script>
-
+                                   
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4>Trips Per Month</h4>
-                                </div>
-                                <div class="card-body">
-                                    <div id="chart"></div>
-
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4>System Users</h4>
-                                </div>
-                                <div class="card-body">
-                                    <!-- <div id="chart-profile-visit"></div> -->
+                        
+                        
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4>Trips Per Month</h4>
+                                    </div>
+                                    <div class="card-body">
+                                         <div id="chart"></div>
+                                        
+                                   
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                </div>
-                <div class="col-12 col-lg-3">
-                    <div class="card">
-                        <div class="card-body py-4 px-5">
-                            <div class="d-flex align-items-center">
-                                <div class="avatar avatar-xl">
-                                    <img src="assets/images/faces/1.jpg" alt="Face 1">
-                                </div>
-                                <div class="ms-3 name">
-                                    <h5 class="font-bold">Total number of drivers</h5>
-                                    <h4><div id="dri"></div></h4>
+                        
+                        
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4>System Users</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <!-- <div id="chart-profile-visit"></div> -->
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        
                     </div>
-
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Unions Profile</h4>
+                    <div class="col-12 col-lg-3">
+                        <div class="card">
+                            <div class="card-body py-4 px-5">
+                                <div class="d-flex align-items-center">
+                                    <div class="avatar avatar-xl">
+                                        <img src="assets/images/faces/1.jpg" alt="Face 1">
+                                    </div>
+                                    <div class="ms-3 name">
+                                        <h5 class="font-bold">Total number of drivers</h5>
+                                        <h4><div id="dri"></div></h4>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-body">
-                            <div id="chart-visitors-profile1"></div>
-
-                            <script type="text/javascript">
-
+                       
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Unions Profile</h4>
+                            </div>
+                            <div class="card-body">
+                                 <div id="chart-visitors-profile1"></div>
+                                
+                                <script type="text/javascript">
+                                
                                 let optionsVisitorsProfile1  = {
-                                    series: [70, 30],
-                                    labels: ['Complete Trips', 'Uncompleted Trips'],
-                                    colors: ['#435ebe','#55c6e8'],
-                                    chart: {
-                                        type: 'donut',
-                                        width: '100%',
-                                        height:'350px'
-                                    },
-                                    legend: {
-                                        position: 'bottom'
-                                    },
-                                    plotOptions: {
-                                        pie: {
-                                            donut: {
-                                                size: '30%'
-                                            }
-                                        }
-                                    }
-                                }
-
+                                		series: [70, 30],
+                                		labels: ['Complete Trips', 'Uncompleted Trips'],
+                                		colors: ['#435ebe','#55c6e8'],
+                                		chart: {
+                                			type: 'donut',
+                                			width: '100%',
+                                			height:'350px'
+                                		},
+                                		legend: {
+                                			position: 'bottom'
+                                		},
+                                		plotOptions: {
+                                			pie: {
+                                				donut: {
+                                					size: '30%'
+                                				}
+                                			}
+                                		}
+                                	}
+                                
                                 var chartVisitorsProfile1 = new ApexCharts(document.getElementById('chart-visitors-profile1'), optionsVisitorsProfile1);
                                 chartVisitorsProfile1.render();
-
-                            </script>
+                                
+                                </script>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            </div>
+
+           
         </div>
-
-
     </div>
-</div>
-<script src="assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-<script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
 
-<script src="assets/vendors/apexcharts/apexcharts.js"></script>
-<script src="assets/js/pages/dashboard.js"></script>
+    <script src="assets/vendors/apexcharts/apexcharts.js"></script>
+    <script src="assets/js/pages/dashboard.js"></script>
 
-<script src="assets/js/main.js"></script>
+    <script src="assets/js/main.js"></script>
 </body>
 
 </html>

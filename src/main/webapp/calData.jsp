@@ -25,11 +25,10 @@
 <%@ page import="java.text.DateFormat" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
+<%@ page import="control.DBConnection" %>
+<%@ page import="control.Encrypt" %>
 
-
-<%  
-
-
+<%
 
 String branch1 = (String)session.getAttribute("branch");
 Calendar cal = Calendar.getInstance();
@@ -49,8 +48,8 @@ PreparedStatement pst;
 ResultSet rs;
 
 
-Class.forName("com.mysql.jdbc.Driver");
-con = DriverManager.getConnection("jdbc:mysql://localhost/caldriva","root","root");
+
+con = DBConnection.getConnection();
 Statement stmt = con.createStatement();
 int i=0;
 String option= request.getParameter("option");
@@ -1223,7 +1222,7 @@ else if(option.equals("getA")){
 									    String pass = request.getParameter("pass");
 									    
 									    String date = m4;
-									    
+									   
 									  
 									    pst = con.prepareStatement("insert into unionmanager(unionName,manager,date)values(?,?,?)");
 									   
@@ -1233,12 +1232,8 @@ else if(option.equals("getA")){
 									   
 									    pst.executeUpdate();
 									    
-									    pst = con.prepareStatement("insert into login(unions,branch,password,name)values(?,'Union',?,?)");
-									    pst.setString(1, union);
-									    pst.setString(2, pass);
-									    pst.setString(3, name);
-									   
-									    pst.executeUpdate();
+									    Encrypt.enc(pass,union);
+									    
 									    JSONObject obj = new JSONObject();
 									    obj.put("passenger", union);
 									    list.add(obj);

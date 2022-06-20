@@ -16,7 +16,7 @@
 <%@ page import="com.google.gson.JsonObject"%>
 <%@ page import="java.util.*,java.sql.*" %>
 <%@ page import="java.io.*" %>
-
+<%@ page import="control.DBConnection" %>
 
 <%
 
@@ -26,10 +26,9 @@ PreparedStatement pst;
 ResultSet rs;
 
 
-Class.forName("com.mysql.jdbc.Driver");
-con = DriverManager.getConnection("jdbc:mysql://localhost/caldriva","root","root");
+con = DBConnection.getConnection();
 Statement stmt = con.createStatement();
-String branch = "Takwa";
+String branch = (String)session.getAttribute("branch");
 String option= request.getParameter("option");
 //(String)session.getAttribute("login");
 if(option.equals("adminM")){

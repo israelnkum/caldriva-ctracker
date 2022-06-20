@@ -16,20 +16,17 @@
 <%@ page import="com.google.gson.JsonObject"%>
 <%@ page import="java.util.*,java.sql.*" %>
 <%@ page import="java.io.*" %>
-
+<%@ page import="control.DBConnection" %>
 
 <%
-
-System.out.println("counting ...........");
-
 
 Connection con;
 PreparedStatement pst;
 ResultSet rs;
-Class.forName("com.mysql.jdbc.Driver");
-con = DriverManager.getConnection("jdbc:mysql://localhost/caldriva","root","root");
+
+con = DBConnection.getConnection();
 Statement stmt = con.createStatement();
-String union = "gprtu";
+String union = (String)session.getAttribute("name");
 //(String)session.getAttribute("login");
 String totalT =null;
 String mon = null;
