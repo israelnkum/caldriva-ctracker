@@ -350,7 +350,7 @@ $(window).on('load', function() {
                         <li class="sidebar-title">Menu</li>
 
                         <li class="sidebar-item  ">
-                            <a href="adminDashboard.jsp" class='sidebar-link'>
+                            <a href=<%out.println(dashPage); %> class='sidebar-link'>
                                 <i class="bi bi-grid-fill"></i>
                                 <span>Dashboard</span>
                             </a>

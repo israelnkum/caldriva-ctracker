@@ -313,6 +313,24 @@ $(window).on('load', function() {
 });
 </script>
 
+    <%
+     String dash = branch;
+     String dashPage="";
+     String admin = "adminDashboard.jsp";
+     String union1 = "unionDashboard.jsp";
+     String branch1 = "BranchDashboard.jsp";
+     
+       if(dash.equals("admin")){
+       	dashPage = admin;
+       }else if(dash.equals("Union")){
+       	dashPage = union1;
+       	
+       }else{
+       	dashPage = branch1;
+       }
+     
+     %>
+
     <div id="app">
     
     <!-- start side bar -->
@@ -334,7 +352,7 @@ $(window).on('load', function() {
                         <li class="sidebar-title">Menu</li>
 
                         <li class="sidebar-item  ">
-                            <a href="adminDashboard.jsp" class='sidebar-link'>
+                            <a href=<%out.println(dashPage); %> class='sidebar-link'>
                                 <i class="bi bi-grid-fill"></i>
                                 <span>Dashboard</span>
                             </a>

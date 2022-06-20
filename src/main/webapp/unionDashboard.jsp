@@ -244,14 +244,15 @@ body{margin-top:20px;}
 	String p=null;
 	String u=null;
         response.setHeader("cache-control", "no-cache, no-store, must-revalidate");
-	ResultSet resultSet = st.executeQuery("select * from login where branch='admin'");
+	ResultSet resultSet = st.executeQuery("select * from login where unions='"+union+"'");
 	
 	while(resultSet.next()){
 		b=resultSet.getString("branch");
 		u=resultSet.getString("unions");
 		p=resultSet.getString("password");
 	}
-        if(!branch.equals("Union")&& !branch.equals("admin")){
+        if(!branch.equals("Union")|| !union.equals(u)){
+        	  System.out.println("user does not exist");
               response.sendRedirect("index.jsp");   
         }
   	}catch(Exception e){
@@ -498,7 +499,7 @@ body{margin-top:20px;}
                                                     </div>      
 
 
-                          <%
+     <%
      String dash = branch;
      String dashPage="";
      String admin = "adminDashboard.jsp";
