@@ -474,18 +474,10 @@ $(window).on('load', function() {
                                                 
                                             </div>
                                             
-                                      <div class="form-group floating-label col-md-4 mb-3">
-										<label for="" class="mt-1">Select Branch Manager</label>
-											<select name="driver" id="manager" class="choices form-select">
-											<%
-											    String sql="Select * from branchmanager ";
-												ResultSet rst = st.executeQuery(sql);
-												while(rst.next()){
-											%>
-													<option ><%=rst.getString("manager")%></option>
-											<%} %>
-												
-											</select> 
+                                     <div class="col-md-4 mb-3">
+										<label >Select Branch Manager</label>
+											<input name="driver" id="manager" class="form-control">
+										
 										</div>
                                             
                                              <div class="col-md-4 mb-3">
