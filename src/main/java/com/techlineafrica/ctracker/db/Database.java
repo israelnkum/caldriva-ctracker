@@ -10,6 +10,9 @@ public class Database {
     private String password;
 
     public Database(){
+//        this.setUrl("jdbc:mysql://localhost/caldriva_ctracker");
+//        this.setUsername("techLineAfrica");
+//        this.setPassword("T3klyn@frika_2022");
         this.setUrl("jdbc:mysql://localhost/ctracker");
         this.setUsername("root");
         this.setPassword("");

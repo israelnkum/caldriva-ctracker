@@ -23,12 +23,12 @@
     <link rel="stylesheet" href="assets/vendors/iconly/bold.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
+
     <link rel="stylesheet" href="assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
     <link rel="stylesheet" href="assets/vendors/bootstrap-icons/bootstrap-icons.css">
     <link rel="stylesheet" href="assets/css/app.css">
     <link rel="shortcut icon" href="assets/images/profile.jpg" type="image/x-icon">
-    
+
            <!-- Alertify CSS -->
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
 <!-- Default theme -->
@@ -37,12 +37,12 @@
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
 <!-- Bootstrap theme -->
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css"/>
-  <!-- Alertify js -->  
+  <!-- Alertify js -->
  <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
-    
-    
+
+
      <style>
-    
+
 body{margin-top:20px;}
 .preloader {
   position: fixed;
@@ -219,11 +219,11 @@ body{margin-top:20px;}
   }
 }
     </style>
-    
+
 </head>
 
 <body>
-  
+
     <%
 	Connection con=DBConnection.getConnection();
 	Statement st = con.createStatement();
@@ -231,33 +231,33 @@ body{margin-top:20px;}
     String branch = (String)session.getAttribute("branch");
     String pass = (String)session.getAttribute("pass");
   	try{
-	 
+
 
 	String b=null;
 	String p=null;
 	String u=null;
         response.setHeader("cache-control", "no-cache, no-store, must-revalidate");
 	ResultSet resultSet = st.executeQuery("select * from login where unions='admin'");
-	
+
 	while(resultSet.next()){
 		b=resultSet.getString("branch");
 		u=resultSet.getString("unions");
 		p=resultSet.getString("password");
 	}
         if(!pass.equals(p) || !branch.equals(b) || !union.equals(u)|| pass.equals(null) || pass.equals("")){
-              response.sendRedirect("index.jsp");   
+              response.sendRedirect("index.jsp");
         }
   	}catch(Exception e){
-  		 response.sendRedirect("index.jsp"); 
-  		 
+  		 response.sendRedirect("index.jsp");
+
   	}
    %>
 
  <div class="card">
         <div class="card-body" align="right">
             <div class="badges">
-                
-                
+
+
                 <span class="badge bg-light-success"><i class="fa-solid fa-circle-user fa-2xl"></i>  &nbsp;<%out.println(union); %></span>
                  <div class="btn-group me-1 mb-1">
 			                 <div class="dropdown">
@@ -271,18 +271,18 @@ body{margin-top:20px;}
 			                          <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#union" style="cursor:pointer"><i class="fa-solid fa-users"></i> &nbsp;  &nbsp;Add Union Manager</a>
 			                          <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#branch" style="cursor:pointer"><i class="fa-solid fa-user-group"></i>  &nbsp;  &nbsp;Add Branch Manager</a>
 			                          <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#field" style="cursor:pointer"><i class="fa-solid fa-chalkboard-user"></i> &nbsp;  &nbsp;Add field staff </a>
-			                          <a class="dropdown-item" href="logOut" style="cursor:pointer;"><i class="fa-solid fa-right-from-bracket"></i> &nbsp;  &nbsp; Logout</a>
+			                          <a class="dropdown-item" href="logout" style="cursor:pointer;"><i class="fa-solid fa-right-from-bracket"></i> &nbsp;  &nbsp; Logout</a>
 			                     </div>
 			                 </div>
 			             </div>
             </div>
         </div>
     </div>
-    
-                                                
-                                                    
-                                                 
-                                                    
+
+
+
+
+
                                                  <!--Danger theme Modal -->
                                                     <div class="modal fade text-left" id="reset" tabindex="-1"
                                                         role="dialog" aria-labelledby="myModalLabel120"
@@ -306,13 +306,13 @@ body{margin-top:20px;}
 							                                            <input class="form-control form-control-sm" type="text"
 							                                                placeholder="Small Input">
 							                                        </div>
-							                                        
+
 							                                        <div class="col-sm-4">
 							                                            <label>Branch</label>
 							                                            <input class="form-control form-control-sm" type="text"
 							                                                placeholder="Small Input">
 							                                        </div>
-							                                        
+
 							                                        <div class="col-sm-4">
 							                                            <label>Password</label>
 							                                            <input class="form-control form-control-sm" type="text"
@@ -336,7 +336,7 @@ body{margin-top:20px;}
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    
+
                                                      <div class="modal fade text-left" id="union" tabindex="-1"
                                                         role="dialog" aria-labelledby="myModalLabel120"
                                                         aria-hidden="true">
@@ -359,33 +359,33 @@ body{margin-top:20px;}
 																				<select name="driver" id="unionM" class="choices form-select">
 																				<%
 																				    String sql="Select * from union1";
-																				    
+
 																					ResultSet rst = st.executeQuery(sql);
 																					while(rst.next()){
 																				%>
 																						<option ><%=rst.getString("unionName")%></option>
 																				<%} %>
-																					
-																				</select> 
+
+																				</select>
 																			</div>
-							                                        
+
 							                                       <div class="form-group floating-label col-md-6 mb-6">
 							                                            <label>Manager's Name</label>
 							                                            <select class="choices form-select" type="text"
 							                                                id="mName" required>
-							                                                
+
 							                                                <%
 																				    String sqll="Select * from branchmanager";
-																				    
+
 																					 rst = st.executeQuery(sqll);
 																					while(rst.next()){
 																				%>
 																						<option ><%=rst.getString("manager")%></option>
 																				<%} %>
-																					
-																				</select> 
+
+																				</select>
 							                                        </div>
-							                                        
+
 							                                        <div class="col-sm-12">
 							                                            <label>Password</label>
 							                                            <input class="form-control form-control-sm" type="text"
@@ -409,8 +409,8 @@ body{margin-top:20px;}
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    
-                                                    
+
+
                                                      <div class="modal fade text-left" id="field" tabindex="-1"
                                                         role="dialog" aria-labelledby="myModalLabel120"
                                                         aria-hidden="true">
@@ -433,18 +433,18 @@ body{margin-top:20px;}
 																				<select name="driver" id="fUnion" class="choices form-select">
 																				<%
 																				    String sql5="Select * from union1";
-																				    
+
 																					 st = con.createStatement();
 																					 rst = st.executeQuery(sql5);
 																					while(rst.next()){
 																				%>
 																						<option ><%=rst.getString("unionName")%></option>
 																				<%} %>
-																					
-																				</select> 
+
+																				</select>
 																			</div>
-							                                        
-							                                        
+
+
 							                                        <div class="form-group floating-label col-md-6 mb-3">
 																			<label for="" class="mt-1">Select Branch</label>
 																				<select name="driver" id="fbranch" class="choices form-select">
@@ -456,16 +456,16 @@ body{margin-top:20px;}
 																				%>
 																						<option ><%=rst.getString("branchName")%></option>
 																				<%} %>
-																					
-																				</select> 
+
+																				</select>
 																			</div>
-							                                        
+
 							                                     <div class="col-sm-6">
 							                                            <label>Staff's Name</label>
 							                                            <input class="form-control form-control-sm" type="text"
 							                                                id="staff">
 							                                        </div>
-							                                        
+
 							                                        <div class="col-sm-6">
 							                                            <label>Password</label>
 							                                            <input class="form-control form-control-sm" type="text"
@@ -489,8 +489,8 @@ body{margin-top:20px;}
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    
-                                                    
+
+
                                                      <div class="modal fade text-left" id="branch" tabindex="-1"
                                                         role="dialog" aria-labelledby="myModalLabel120"
                                                         aria-hidden="true">
@@ -508,58 +508,58 @@ body{margin-top:20px;}
                                                                 </div>
                                                                 <div class="modal-body">
                                                                   <div class="row">
-                                                                   
-							                                        
+
+
 							                                        <div class="form-group floating-label col-md-6 mb-3">
 																			<label for="" class="mt-1">Select Union</label>
 																				<select name="driver" id="bUnion" class="choices form-select">
 																				<%
 																				    String sql4="Select * from union1";
-																				    
+
 																					 st = con.createStatement();
 																					 rst = st.executeQuery(sql4);
 																					while(rst.next()){
 																				%>
 																						<option ><%=rst.getString("unionName")%></option>
 																				<%} %>
-																					
-																				</select> 
+
+																				</select>
 																			</div>
-							                                        
-							                                        
+
+
 							                                        <div class="form-group floating-label col-md-6 mb-3">
 																			<label for="" class="mt-1">Select Branch</label>
 																				<select name="driver" id="bBranch" class="choices form-select">
 																				<%
 																				    String sql1="Select * from branch";
-																				    
+
 																					 st = con.createStatement();
 																					 rst = st.executeQuery(sql1);
 																					while(rst.next()){
 																				%>
 																						<option ><%=rst.getString("branchName")%></option>
 																				<%} %>
-																					
-																				</select> 
+
+																				</select>
 																			</div>
-																			
+
 																  <div class="form-group floating-label col-md-6 mb-3">
 							                                            <label>Manager's Name</label>
 							                                            <select class="choices form-select" type="text"
 							                                                id="bName" required>
-							                                                
+
 							                                                <%
 																				    String sqll1="Select * from unionmanager";
-																				    
+
 																					 rst = st.executeQuery(sqll1);
 																					while(rst.next()){
 																				%>
 																						<option ><%=rst.getString("manager")%></option>
 																				<%} %>
-																					
-																				</select> 
+
+																				</select>
 							                                        </div>
-							                                        
+
 							                                        <div class="col-sm-6">
 							                                            <label>Password</label>
 							                                            <input class="form-control form-control-sm" type="text"
@@ -589,24 +589,24 @@ body{margin-top:20px;}
 													     String admin = "adminDashboard.jsp";
 													     String union1 = "unionDashboard.jsp";
 													     String branch1 = "BranchDashboard.jsp";
-													     
+
 													       if(dash.equals("admin")){
 													       	dashPage = admin;
 													       }else if(dash.equals("Union")){
 													       	dashPage = union1;
-													       	
+
 													       }else{
 													       	dashPage = branch1;
 													       }
-													     
+
 													     %>
 
 														<div class="preloader">
 														    <div class="loader">
 														        <div class="loader-outter"></div>
 														        <div class="loader-inner"></div>
-														
-														        <div class="indicator"> 
+
+														        <div class="indicator">
 														            <svg width="16px" height="12px">
 														                <polyline id="back" points="1 6 4 6 6 11 10 1 12 6 15 6"></polyline>
 														                <polyline id="front" points="1 6 4 6 6 11 10 1 12 6 15 6"></polyline>
@@ -618,17 +618,17 @@ body{margin-top:20px;}
 													<script src="component/jquery/jquery.min.js" type="text/javascript"></script>
 													<script src="component/jquery.validate.min.js" type="text/javascript"></script>
 													<script type="text/javascript">
-													
+
 													$(window).on('load', function() {
 													    //for use in production please remove this setTimeOut
-													    setTimeout(function(){ 
+													    setTimeout(function(){
 													        $('.preloader').addClass('preloader-deactivate');
 													    }, 30);
 													    //uncomment this line for use this snippet in production
 													    //	$('.preloader').addClass('preloader-deactivate');
 													});
-													
-													
+
+
 													trip();
 													income();
 													tUnion();
@@ -638,91 +638,91 @@ body{margin-top:20px;}
 													tStations();
 													tUncompleted();
 													function addUnion(){
-											        	  
+
 											        	  $.ajax({
-											        		  
+
 											        		  type:"POST",
 											        		  url:"calData.jsp",
 											        		  data:{"union":$("#unionM").val(),"name":$("#mName").val(),"pass":$("#uPass").val(),"option":'addunion'},
-											        		 
+
 											        			  /*------------------------------------   Ajax call area  ------------------------------------------------*/
 											        		  success:function(msg){
 											        			  var obj = JSON.parse(msg);
 											        			  var notification = alertify.notify('Success', 'success', 5, function(){  console.log('dismissed'); }); alertify.set('notifier','position', 'top-right');
-											        			  
+
 											        		  },
 											        		  error(err){
 											        			  alertify.error('Error');
 											        		  }
-											        		  
-											        		  
+
+
 											        	  })
-											        	  
+
 											          }
-													
+
 													function addBranch(){
-											        	  
-													      
+
+
 													       $.ajax({
-												        		  
+
 												        		  type:"POST",
 												        		  url:"calData.jsp",
 												        		  data:{"bBranch":$("#bBranch").val(),"name":$("#bName").val(),"union":$("#bUnion").val(),"pass":$("#bpass").val(),"option":'addbranchM'},
-												        		 
+
 												        			  /*------------------------------------   Ajax call area  ------------------------------------------------*/
 												        		  success:function(msg){
 												        			  var obj = JSON.parse(msg);
 												        			  var notification = alertify.notify('Success', 'success', 5, function(){  console.log('dismissed'); }); alertify.set('notifier','position', 'top-right');
-												        			  
+
 												        		  },
 												        		  error(err){
 												        			  alertify.error('Error');
 												        		  }
-												        		  
-												        		  
+
+
 												        	  })
-											        	  
+
 											          }
-													
+
 													function addFieldStaff(){
-											        	   
+
 													       $.ajax({
-												        		  
+
 												        		  type:"POST",
 												        		  url:"calData.jsp",
 												        		  data:{"union":$("#fUnion").val(),"branch":$("#fbranch").val(),"name":$("#staff").val(),"pass":$("#staffPass").val(),"option":'addstaff'},
-												        		 
+
 												        			  /*------------------------------------   Ajax call area  ------------------------------------------------*/
 												        		  success:function(msg){
 												        			  var obj = JSON.parse(msg);
 												        			  var notification = alertify.notify('Success', 'success', 5, function(){  console.log('dismissed'); }); alertify.set('notifier','position', 'top-right');
-												        			  
+
 												        		  },
 												        		  error(err){
 												        			  alertify.error('Error');
 												        		  }
-												        		  
-												        		  
+
+
 												        	  })
-											        	  
+
 											          }
-													
-													
-													
-													
-													
+
+
+
+
+
 													function trip(){
 									            		 $.ajax({
 											        		  type:"GET",
 											        		  url:"test.jsp",
 											        		  data:{"option":'adminM'},
-											        		 
+
 											        			  /*------------------------------------   Ajax call area  ------------------------------------------------*/
 											        		  success:function(msg){
 											        			  var obj = JSON.parse(msg);
 											        			  var datapoints = obj[0].dataPoints;
-											        			  
-											        		
+
+
 											        			  var options = {
 											        					  chart: {
 											        					      height: 350,
@@ -744,7 +744,7 @@ body{margin-top:20px;}
 											        					);
 
 											        					chart.render();
-											        					
+
 											        					var url = 'NewFile.jsp';
 
 											        					$.getJSON(url, function(response) {
@@ -758,24 +758,24 @@ body{margin-top:20px;}
 											        		  error(err){
 											        			  alertify.error(' an error occured');
 											        		  }
-											        		  
-											        		  
+
+
 											        	  })
 									            	 }
-													
-													
+
+
 													function income(){
 									            		 $.ajax({
 											        		  type:"GET",
 											        		  url:"test.jsp",
 											        		  data:{"option":'adminIncome'},
-											        		 
+
 											        			  /*------------------------------------   Ajax call area  ------------------------------------------------*/
 											        		  success:function(msg){
 											        			  var obj = JSON.parse(msg);
 											        			  var datapoints = obj[0].dataPoints;
-											        			  
-											        			  
+
+
 											        			  var options = {
 											        					  chart: {
 											        					      height: 350,
@@ -797,7 +797,7 @@ body{margin-top:20px;}
 											        					);
 
 											        					chart.render();
-											        					
+
 											        					var url = 'adminIncome.jsp';
 
 											        					$.getJSON(url, function(response) {
@@ -811,182 +811,182 @@ body{margin-top:20px;}
 											        		  error(err){
 											        			  alertify.error(' an error occured');
 											        		  }
-											        		  
-											        		  
+
+
 											        	  })
 									            	 }
-													
+
 													/////////////////////   tiles data /////////////////////////////////////////////
-													
+
 													function tUnion(){
 								            		 $.ajax({
 										        		  type:"GET",
 										        		  url:"test.jsp",
 										        		  data:{"option":'countU'},
-										        		 
+
 										        			  /*------------------------------------   Ajax call area  ------------------------------------------------*/
 										        		  success:function(msg){
-										        			  
+
 										        			  var obj = JSON.parse(msg);
-										        			
+
 										        				 //  var notification = alertify.notify('ID Exists', 'success', 5, function(){  console.log('dismissed'); }); alertify.set('notifier','position', 'top-right');
 										        				 // $("#seat").val(obj[0].seatForU);
 										        			  $("#uni").html(obj[0].totalU);
 										        			  $("#un1").html(obj[0].totalU);
-											        			 
-										        			  
+
+
 										        		  },
 										        		  error(err){
 										        			  alertify.error(' an error occured');
 										        		  }
-										        		  
-										        		  
+
+
 										        	  })
 								            	 }
-													
+
 													function tBranch(){
 									            		 $.ajax({
 											        		  type:"GET",
 											        		  url:"test.jsp",
 											        		  data:{"option":'tBranch'},
-											        		 
+
 											        			  /*------------------------------------   Ajax call area  ------------------------------------------------*/
 											        		  success:function(msg){
-											        			  
+
 											        			  var obj = JSON.parse(msg);
-											        			
+
 											        				  // var notification = alertify.notify('ID Exists', 'success', 5, function(){  console.log('dismissed'); }); alertify.set('notifier','position', 'top-right');
 											        			  $("#bra").html(obj[0].totalB);
-												        			 
-											        			  
+
+
 											        		  },
 											        		  error(err){
 											        			  alertify.error(' an error occured');
 											        		  }
-											        		  
-											        		  
+
+
 											        	  })
 									            	 }
-													
+
 													function tVehicles(val){
 									            		 $.ajax({
 											        		  type:"GET",
 											        		  url:"test.jsp",
 											        		  data:{"option":'tVehicles'},
-											        		 
+
 											        			  /*------------------------------------   Ajax call area  ------------------------------------------------*/
 											        		  success:function(msg){
-											        			  
+
 											        			  var obj = JSON.parse(msg);
-											        			
+
 											        				 //   var notification = alertify.notify('ID Exists', 'success', 5, function(){  console.log('dismissed'); }); alertify.set('notifier','position', 'top-right');
 											        			  $("#vehi").html(obj[0].totalV);
-												        			 
-											        			  
+
+
 											        		  },
 											        		  error(err){
 											        			  alertify.error(' an error occured');
 											        		  }
-											        		  
-											        		  
+
+
 											        	  })
 									            	 }
-													
+
 													function tDrivers(){
 									            		 $.ajax({
 											        		  type:"GET",
 											        		  url:"test.jsp",
 											        		  data:{"option":'tDrivers'},
-											        		 
+
 											        			  /*------------------------------------   Ajax call area  ------------------------------------------------*/
 											        		  success:function(msg){
-											        			  
+
 											        			  var obj = JSON.parse(msg);
-											        			
+
 											        				 //  var notification = alertify.notify('ID Exists', 'success', 5, function(){  console.log('dismissed'); }); alertify.set('notifier','position', 'top-right');
 											        			  $("#dri").html(obj[0].totalDri);
-												        			 
-											        			  
+
+
 											        		  },
 											        		  error(err){
 											        			  alertify.error(' an error occured');
 											        		  }
-											        		  
-											        		  
+
+
 											        	  })
 									            	 }
-													
+
 													function tStations(){
 									            		 $.ajax({
 											        		  type:"GET",
 											        		  url:"test.jsp",
 											        		  data:{"option":'tStations'},
-											        		 
+
 											        			  /*------------------------------------   Ajax call area  ------------------------------------------------*/
 											        		  success:function(msg){
-											        			  
+
 											        			  var obj = JSON.parse(msg);
-											        			
+
 											        				  // var notification = alertify.notify('ID Exists', 'success', 5, function(){  console.log('dismissed'); }); alertify.set('notifier','position', 'top-right');
-											        				 
+
 											        				  $("#stat").html(obj[0].totalSta);
 											        				  $("#stat1").html(obj[0].totalSta);
-												        			 
-											        			  
+
+
 											        		  },
 											        		  error(err){
 											        			  alertify.error(' an error occured');
 											        		  }
-											        		  
-											        		  
+
+
 											        	  })
 									            	 }
-													
+
 													function tStaffs(){
 									            		 $.ajax({
 											        		  type:"GET",
 											        		  url:"calData.jsp",
 											        		  data:{"seat" :val,"option":'seat'},
-											        		 
+
 											        			  /*------------------------------------   Ajax call area  ------------------------------------------------*/
 											        		  success:function(msg){
-											        			  
+
 											        			  var obj = JSON.parse(msg);
-											        			
+
 											        				  // var notification = alertify.notify('ID Exists', 'success', 5, function(){  console.log('dismissed'); }); alertify.set('notifier','position', 'top-right');
 											        				  $("#seat").val(obj[0].seatForU);
-												        			 
-											        			  
+
+
 											        		  },
 											        		  error(err){
 											        			  alertify.error(' an error occured');
 											        		  }
-											        		  
-											        		  
+
+
 											        	  })
 									            	 }
-													
+
 													function tBranchM(){
 									            		 $.ajax({
 											        		  type:"GET",
 											        		  url:"calData.jsp",
 											        		  data:{"seat" :val,"option":'seat'},
-											        		 
+
 											        			  /*------------------------------------   Ajax call area  ------------------------------------------------*/
 											        		  success:function(msg){
-											        			  
+
 											        			  var obj = JSON.parse(msg);
-											        			
+
 											        				 //  var notification = alertify.notify('ID Exists', 'success', 5, function(){  console.log('dismissed'); }); alertify.set('notifier','position', 'top-right');
 											        				  $("#seat").val(obj[0].seatForU);
-												        			 
-											        			  
+
+
 											        		  },
 											        		  error(err){
 											        			  alertify.error(' an error occured');
 											        		  }
-											        		  
-											        		  
+
+
 											        	  })
 									            	 }
 													function tSuper(){
@@ -994,79 +994,79 @@ body{margin-top:20px;}
 											        		  type:"GET",
 											        		  url:"calData.jsp",
 											        		  data:{"seat" :val,"option":'seat'},
-											        		 
+
 											        			  /*------------------------------------   Ajax call area  ------------------------------------------------*/
 											        		  success:function(msg){
-											        			  
+
 											        			  var obj = JSON.parse(msg);
-											        			
+
 											        				 //  var notification = alertify.notify('ID Exists', 'success', 5, function(){  console.log('dismissed'); }); alertify.set('notifier','position', 'top-right');
 											        				  $("#seat").val(obj[0].seatForU);
-												        			 
-											        			  
+
+
 											        		  },
 											        		  error(err){
 											        			  alertify.error(' an error occured');
 											        		  }
-											        		  
-											        		  
+
+
 											        	  })
 									            	 }
-													
+
 													function tUncompleted(){
 									            		 $.ajax({
 											        		  type:"GET",
 											        		  url:"test.jsp",
 											        		  data:{"option":'tUncompleted'},
-											        		 
+
 											        			  /*------------------------------------   Ajax call area  ------------------------------------------------*/
 											        		  success:function(msg){
-											        			  
+
 											        			  var obj = JSON.parse(msg);
-											        			
+
 											        				 //  var notification = alertify.notify('ID Exists', 'success', 5, function(){  console.log('dismissed'); }); alertify.set('notifier','position', 'top-right');
 											        			  $("#uncomp").html(obj[0].totalUnc);
-												        			 
-											        			  
+
+
 											        		  },
 											        		  error(err){
 											        			  alertify.error(' an error occured');
 											        		  }
-											        		  
-											        		  
+
+
 											        	  })
 									            	 }
-													
+
 													function logOut(){
-														
+
 														$.ajax({
-											        		  
+
 											        		  type:"POST",
 											        		  url:"logOut",
 											        		  data:{"myid" :ids},
-											        		  
+
 											        		  success:function(msg){
 											        			  var obj = JSON.parse(msg);
-											        			
-											        			
-											        			  
+
+
+
 											        		  },
 											        		  error(err){
 											        			  alertify.error('Error');
 											        		  }
-											        		  
-											        		  
+
+
 											        	  })
 													}
-													
+
 							                    	/////////////////////   tiles data /////////////////////////////////////////////
-											
+
 													</script>
 
 
 										    <div id="app">
 										 <!-- start side bar -->
-										    
+
 										        <div id="sidebar" class="active">
 										            <div class="sidebar-wrapper active">
 										                <div class="sidebar-header">
@@ -1082,19 +1082,19 @@ body{margin-top:20px;}
 							                <div class="sidebar-menu">
 							                    <ul class="menu">
 							                        <li class="sidebar-title">Menu</li>
-							
+
 							                        <li class="sidebar-item  ">
-							                        
+
 							                            <a href="<% out.println(dashPage);%>" class='sidebar-link'>
 							                                <i class="bi bi-grid-fill"></i>
 							                                <span>Dashboard</span>
 							                            </a>
 							                        </li>
-                      
+
 						                      <li class="sidebar-item  ">
 						                            <a href="station.jsp" class='sidebar-link'>
 						                                <i class="bi bi-globe2"></i>
-						                                
+
 						                                <span>Branches</span>
 						                            </a>
 						                        </li>
@@ -1121,7 +1121,7 @@ body{margin-top:20px;}
                             </a>
                         </li>
 
-                    
+
 
                         <li class="sidebar-item  ">
                             <a href="passengers.jsp" class='sidebar-link'>
@@ -1130,14 +1130,14 @@ body{margin-top:20px;}
                             </a>
                         </li>
 
-                  
+
                         <li class="sidebar-item  ">
                             <a href="booking.jsp" class='sidebar-link'>
                                 <i class="bi bi-file-earmark-spreadsheet-fill"></i>
                                 <span>Bookings</span>
                             </a>
                         </li>
-                        
+
                         <li class="sidebar-item  ">
                             <a href="union.jsp" class='sidebar-link'>
                                 <i class="bi bi-people"></i>
@@ -1151,7 +1151,7 @@ body{margin-top:20px;}
                 <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
             </div>
         </div>
-        
+
         <!-- end side bar -->
         <div id="main">
             <header class="mb-3">
@@ -1201,8 +1201,8 @@ body{margin-top:20px;}
                                     </div>
                                 </div>
                             </div>
-                            
-                            
+
+
                             <div class="col-6 col-lg-3 col-md-6">
                                 <div class="card">
                                     <div class="card-body px-3 py-4-5">
@@ -1220,8 +1220,8 @@ body{margin-top:20px;}
                                     </div>
                                 </div>
                             </div>
-                            
-                            
+
+
                             <div class="col-6 col-lg-3 col-md-6">
                                 <div class="card">
                                     <div class="card-body px-3 py-4-5">
@@ -1239,7 +1239,7 @@ body{margin-top:20px;}
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="col-6 col-lg-3 col-md-6">
                                 <div class="card">
                                     <div class="card-body px-3 py-4-5">
@@ -1257,7 +1257,7 @@ body{margin-top:20px;}
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="col-6 col-lg-3 col-md-6">
                                 <div class="card">
                                     <div class="card-body px-3 py-4-5">
@@ -1275,7 +1275,7 @@ body{margin-top:20px;}
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="col-6 col-lg-3 col-md-6">
                                 <div class="card">
                                     <div class="card-body px-3 py-4-5">
@@ -1293,7 +1293,7 @@ body{margin-top:20px;}
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="col-6 col-lg-3 col-md-6">
                                 <div class="card">
                                     <div class="card-body px-3 py-4-5">
@@ -1311,9 +1311,9 @@ body{margin-top:20px;}
                                     </div>
                                 </div>
                             </div>
-                            
-                            
-                            
+
+
+
                         </div>
                         <div class="row">
                             <div class="col-12">
@@ -1324,13 +1324,13 @@ body{margin-top:20px;}
                                     <div class="card-body">
                                          <div id="chart1"></div>
                                     <script src="assets/vendors/apexcharts/apexcharts.js"></script>
-                                   
+
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        
-                        
+
+
                         <div class="row">
                             <div class="col-12">
                                 <div class="card">
@@ -1339,14 +1339,14 @@ body{margin-top:20px;}
                                     </div>
                                     <div class="card-body">
                                          <div id="chart"></div>
-                                        
-                                   
+
+
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        
-                        
+
+
                         <div class="row">
                             <div class="col-12">
                                 <div class="card">
@@ -1359,7 +1359,7 @@ body{margin-top:20px;}
                                 </div>
                             </div>
                         </div>
-                        
+
                     </div>
                     <div class="col-12 col-lg-3">
                         <div class="card">
@@ -1375,16 +1375,16 @@ body{margin-top:20px;}
                                 </div>
                             </div>
                         </div>
-                       
+
                         <div class="card">
                             <div class="card-header">
                                 <h4>Unions Profile</h4>
                             </div>
                             <div class="card-body">
                                  <div id="chart-visitors-profile1"></div>
-                                
+
                                 <script type="text/javascript">
-                                
+
                                 let optionsVisitorsProfile1  = {
                                 		series: [70, 30],
                                 		labels: ['Complete Trips', 'Uncompleted Trips'],
@@ -1405,10 +1405,10 @@ body{margin-top:20px;}
                                 			}
                                 		}
                                 	}
-                                
+
                                 var chartVisitorsProfile1 = new ApexCharts(document.getElementById('chart-visitors-profile1'), optionsVisitorsProfile1);
                                 chartVisitorsProfile1.render();
-                                
+
                                 </script>
                             </div>
                         </div>
@@ -1416,7 +1416,7 @@ body{margin-top:20px;}
                 </section>
             </div>
 
-           
+
         </div>
     </div>
     <script src="assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>

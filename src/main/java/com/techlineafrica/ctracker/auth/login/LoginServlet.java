@@ -15,7 +15,6 @@ public class LoginServlet extends HttpServlet {
         String branch = request.getParameter("branch");
         String pass = request.getParameter("pass");
 
-        response.getWriter().println(name);
         LoginDao dao = new LoginDao();
         HttpSession session = request.getSession(false);
         if(dao.check(name,branch, pass)) {

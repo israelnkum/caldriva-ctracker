@@ -34,9 +34,9 @@
     <meta name="keywords" content="flat ui, admin Admin , Responsive, Landing, Bootstrap, App, Template, Mobile, iOS, Android, apple, creative app">
     <meta name="author" content="codedthemes" />
     <!-- Favicon icon -->
-    
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-   
+
     <!-- Google font-->     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
     <!-- Required Fremwork -->
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap/css/bootstrap.min.css">
@@ -49,16 +49,16 @@
     <!-- Style.css -->
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <link rel="stylesheet" type="text/css" href="assets/css/jquery.mCustomScrollbar.css">
-    
-    
+
+
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-   
-   
+
+
    <style type="text/css">
-   
-                 html,body { 
-	height: 100%; 
+
+                 html,body {
+	height: 100%;
 }
 
 .global-container{
@@ -83,7 +83,7 @@ form{
 }
 
 
-.login-form{ 
+.login-form{
 	width:330px;
 	margin:20px;
 }
@@ -98,8 +98,8 @@ form{
 	font-size: 13px;
 	margin-top:20px;
 }
-   
-   
+
+
 $button-width: 150px;
 $spinner-width: $button-width/6;
 $blue: #0076d3;
@@ -152,18 +152,18 @@ small{
   border: 0;
   transition: border-radius linear 0.05s, width linear 0.05s;
 
-  
+
   &:focus{
     outline: 0;
   }
-  
+
   &.animate{
     width: $button-width/2.2;
     height: $button-width/2.2;
     min-width: 0;
     border-radius: 50%;
     color: transparent;
-    
+
     &:after{
       position: absolute;
       content: '';
@@ -178,7 +178,7 @@ small{
       transform: translate(-50%, -50%);
       animation: spin ease-in 2.5s forwards;
       animation-name: spin;
-      -webkit-animation-name: spin; 
+      -webkit-animation-name: spin;
       transition-timing-function:ease-in-out;
       -webkit-transition-timing-function: ease-in-out;
       animation-duration: 2.5s;
@@ -203,14 +203,14 @@ small{
       animation: success ease-in 0.15s forwards;
       animation-delay: 2.5s;
     }
-    
+
     &.error{
       position: relative;
       -webkit-animation: vibrate ease-in 0.5s forwards;
       animation: vibrate ease-in 0.5s forwards;
       -webkit-animation-delay: 2.5s;
       animation-delay: 2.5s;
-     
+
       &:before{
         color: #fff;
         position: absolute;
@@ -230,7 +230,7 @@ small{
   }
 }
 
-    
+
 @keyframes spin {
     0% { transform: translate(-50%, -50%) rotate(0deg) scale(1);}
     90% { transform: translate(-50%, -50%) rotate(1080deg) scale(1); }
@@ -244,7 +244,7 @@ small{
 
   100% {-webkit-transform: translate(-50%,-50%) rotate(1080deg) scale(0);}
 }
-    
+
 @keyframes success{
     from {
        transform: translate(-50%, -50%) rotate(0) scale(0);
@@ -264,20 +264,20 @@ small{
 }
 
 @keyframes error {
-    from { 
+    from {
     transform: translate(-50%, -50%) scale(0);
     }
-    to { 
+    to {
     transform: translate(-50%, -50%) scale(1);
     background-color: #f44336;
     }
 }
 
 @-webkit-keyframes error {
-    from { 
+    from {
     -webkit-transform: translate(-50%, -50%) scale(0);
     }
-    to { 
+    to {
     -webkit-transform: translate(-50%, -50%) scale(1);
     background-color: #f44336;
     }
@@ -285,23 +285,23 @@ small{
 
 
 @keyframes vibrate {
-    0%, 30%, 60%, 85%, 100% { 
+    0%, 30%, 60%, 85%, 100% {
       left: 0;
       background-color: #f44336;
     }
-    10%, 40%, 90%, 70% { 
+    10%, 40%, 90%, 70% {
       left: -2px;
       background-color: #f44336;
     }
-    20%, 50%, 80%, 95% { 
+    20%, 50%, 80%, 95% {
       left: 2px;
       background-color: #f44336;
     }
 }
-   
-   
-   </style> 
-   
+
+
+   </style>
+
    <!-- CSS -->
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
 <!-- Default theme -->
@@ -310,10 +310,10 @@ small{
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
 <!-- Bootstrap theme -->
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css"/>
-   
-   
+
+
    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
-    
+
 </head>
 
 <script type="text/javascript">
@@ -323,9 +323,9 @@ var animateButton = function(e) {
 	  e.preventDefault;
 	  //reset animation
 	  e.target.classList.remove('animate');
-	  
+
 	  e.target.classList.add('animate');
-	  
+
 	  e.target.classList.add('animate');
 	  setTimeout(function(){
 	    e.target.classList.remove('animate');
@@ -351,24 +351,24 @@ var animateButton = function(e) {
 			      <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
 			      <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
 			      </svg>
-	            
+
 	            </div>
-			
-			<form action="logIn" method="post" id="myform">
-				
+
+			<form action="login" method="post" id="myform">
+
 				<div class="form-group">
 					<label >Union</label>
 					<input type="text" class="form-control " name="union"required>
 				</div>
 				<div class="form-group">
 					<label>Branch</label>
-					
+
 					<input type="text" class="form-control" name="branch" required>
 				</div>
-				
+
 				<div class="form-group">
 					<label>Password</label>
-					
+
 					<input type="password" class="form-control" name="pass" required>
 				</div>
 
@@ -382,8 +382,8 @@ var animateButton = function(e) {
 <script type="text/javascript">
 function testClear(){
 	var f=document.getElementById("myform");
-	
-	
+
+
 	function delay(delayInms) {
 		  return new Promise(resolve => {
 		    setTimeout(() => {
@@ -402,9 +402,9 @@ function testClear(){
 </script>
 
 <progress></progress>
- 
-				
-				
+
+
+
 			</form>
 		</div>
 	</div>
@@ -416,9 +416,3 @@ function testClear(){
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </html>
-
-
-
-
-
-
