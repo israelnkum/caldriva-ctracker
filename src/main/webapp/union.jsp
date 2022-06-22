@@ -321,7 +321,7 @@ $(window).on('load', function() {
      
        if(dash.equals("admin")){
        	dashPage = admin;
-       }else if(dash.equals("union")){
+       }else if(dash.equals("Union")){
        	dashPage = union1;
        	
        }else{
@@ -350,7 +350,7 @@ $(window).on('load', function() {
                         <li class="sidebar-title">Menu</li>
 
                         <li class="sidebar-item  ">
-                            <a href=<%out.println(dashPage); %> class='sidebar-link'>
+                            <a href="<% out.println(dashPage);%>" class='sidebar-link'>
                                 <i class="bi bi-grid-fill"></i>
                                 <span>Dashboard</span>
                             </a>
@@ -714,7 +714,6 @@ $(window).on('load', function() {
 												
 												 function addU(){
 										        	  
-												       alert("add called...."); 
 										        	  $.ajax({
 										        		  
 										        		  type:"POST",
@@ -773,8 +772,6 @@ $(window).on('load', function() {
 												 
 								            	 function gone(id){   	
 												 
-														alert(id);
-													
 											        	  $.ajax({
 											        		  type:"GET",
 											        		  url:"calData.jsp",
@@ -797,7 +794,6 @@ $(window).on('load', function() {
 											          }
 								            	 
 								            	 function logOut(){
-														alert("Logging out ............");
 														
 														$.ajax({
 											        		  

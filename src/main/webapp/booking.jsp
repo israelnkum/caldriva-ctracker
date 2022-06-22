@@ -313,7 +313,8 @@ $(window).on('load', function() {
 });
 </script>
 
-         <%
+    <div id="app">
+   <%
      String dash = branch;
      String dashPage="";
      String admin = "adminDashboard.jsp";
@@ -329,10 +330,7 @@ $(window).on('load', function() {
        	dashPage = branch1;
        }
      
-     %>
-
-    <div id="app">
-    
+     %>   
     <!-- start side bar -->
     
         <div id="sidebar" class="active">
@@ -352,7 +350,7 @@ $(window).on('load', function() {
                         <li class="sidebar-title">Menu</li>
 
                         <li class="sidebar-item  ">
-                            <a href=<%out.println(dashPage); %> class='sidebar-link'>
+                            <a href="<% out.println(dashPage);%>" class='sidebar-link'>
                                 <i class="bi bi-grid-fill"></i>
                                 <span>Dashboard</span>
                             </a>
@@ -783,7 +781,7 @@ $(window).on('load', function() {
 												
 												
 												function logOut(){
-													alert("Logging out ............");
+											
 													
 													$.ajax({
 										        		  
@@ -819,7 +817,7 @@ $(window).on('load', function() {
 										        		  success:function(msg){
 										        			  var obj = JSON.parse(msg);
 										        			  var pPhone = obj[0].phone;
-										        			  alert(pPhone);
+										        			 
 										        			  var notification = alertify.notify('Success', 'success', 5, function(){  console.log('dismissed'); }); alertify.set('notifier','position', 'top-right');
 										        			  getall();
 										        			  $("#seat").attr('readonly','true');
@@ -874,7 +872,6 @@ $(window).on('load', function() {
 												 
 								            	 function gone(id){   	
 												 
-														alert(id);
 													
 											        	  $.ajax({
 											        		  type:"GET",
@@ -993,7 +990,6 @@ $(window).on('load', function() {
 								               //////////////////\\\\\\\\\\\\\\\\   On Select of drop down \\\\\\\\\\///////////
 								               
 								                function message(number){
-								            	   alert("Message Called " +number);
 								            		 $.ajax({
 										        		  type:"POST",
 										        		  url:"hellio",

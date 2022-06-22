@@ -314,27 +314,25 @@ $(window).on('load', function() {
   		 
   	}
    %>
-   
-            <%
-     String dash = branch;
-     String dashPage="";
-     String admin = "adminDashboard.jsp";
-     String union1 = "unionDashboard.jsp";
-     String branch1 = "BranchDashboard.jsp";
-     
-       if(dash.equals("admin")){
-       	dashPage = admin;
-       }else if(dash.equals("Union")){
-       	dashPage = union1;
-       	
-       }else{
-       	dashPage = branch1;
-       }
-     
-     %>
 
     <div id="app">
-    
+  													   <%
+													     String dash = branch;
+													     String dashPage="";
+													     String admin = "adminDashboard.jsp";
+													     String union1 = "unionDashboard.jsp";
+													     String branch1 = "BranchDashboard.jsp";
+													     
+													       if(dash.equals("admin")){
+													       	dashPage = admin;
+													       }else if(dash.equals("Union")){
+													       	dashPage = union1;
+													       	
+													       }else{
+													       	dashPage = branch1;
+													       }
+													     
+													     %>  
     <!-- start side bar -->
     
         <div id="sidebar" class="active">
@@ -354,7 +352,7 @@ $(window).on('load', function() {
                         <li class="sidebar-title">Menu</li>
 
                         <li class="sidebar-item  ">
-                            <a href=<%out.println(dashPage); %> class='sidebar-link'>
+                            <a href="<% out.println(dashPage);%>" class='sidebar-link'>
                                 <i class="bi bi-grid-fill"></i>
                                 <span>Dashboard</span>
                             </a>
@@ -786,7 +784,6 @@ $(window).on('load', function() {
 												
 												 function addV(){
 										        	  
-												       alert("add called...."); 
 										        	  $.ajax({
 										        		  
 										        		  type:"POST",
@@ -847,8 +844,6 @@ $(window).on('load', function() {
 												 
 								            	 function gone(id){   	
 												 
-														alert(id);
-													
 											        	  $.ajax({
 											        		  type:"GET",
 											        		  url:"calData.jsp",

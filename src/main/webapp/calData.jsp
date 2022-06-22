@@ -40,7 +40,7 @@ Calendar cal = Calendar.getInstance();
   
 	 DateFormat formatter = new SimpleDateFormat("hh:mm");
      String endTime = formatter.format(new Date());
-     System.out.println(endTime);
+     
 
 JSONArray list = new JSONArray();
 Connection con;
@@ -57,10 +57,16 @@ String ids= request.getParameter("myid");
 String search= request.getParameter("search");
 String tripName= request.getParameter("seat");
 String branch = (String)session.getAttribute("branch");
-String unions = (String)session.getAttribute("unions");
+String unions = (String)session.getAttribute("name");
 
 if(option.equals("getBranch")){
-	String query = "select * from branch where unions='"+unions+"'";
+	
+	String query = "";
+	if(unions.equals("admin")){
+		query = "select * from branch";
+	}else{
+	query ="select * from branch where unions='"+unions+"'";
+	}
 	rs = stmt.executeQuery(query);
 while(rs.next())
 {
@@ -87,7 +93,12 @@ while(rs.next())
 out.print(list.toJSONString());
 out.flush();
 } else if(option.equals("getVehi")){
-	String query = "select * from vehile where branch='"+branch+"'or unions='"+unions+"'";
+	String query = "";
+	if(unions.equals("admin")){
+		query="select * from vehile";
+	}else{
+	query="select * from vehile where branch='"+branch+"'or unions='"+unions+"'";
+	}
 	rs = stmt.executeQuery(query);
 while(rs.next())
 {
@@ -120,7 +131,12 @@ while(rs.next())
 out.print(list.toJSONString());
 out.flush();
 }else if(option.equals("getDriver")){
-	String query = "select * from driver where branch='"+branch+"' or unions='"+unions+"'";
+	String query ="";
+if(unions.equals("admin")){
+	query="select * from driver";
+	}else{
+query="select * from driver where branch='"+branch+"' or unions='"+unions+"'";
+	}
 	rs = stmt.executeQuery(query);
 while(rs.next())
 {
@@ -154,7 +170,12 @@ out.flush();
 }
 
 else if(option.equals("getTrip")){
-	String query = "select * from trip where branch='"+branch+"' or unions='"+unions+"'";
+	String query = "";
+	if(unions.equals("admin")){
+		query="select * from trip";
+	}else{
+	query="select * from trip where branch='"+branch+"' or unions='"+unions+"'";
+	}
 	rs = stmt.executeQuery(query);
 while(rs.next())
 {
@@ -218,7 +239,12 @@ out.flush();
 }
 
 else if(option.equals("getBook")){
-	String query = "select * from booking where branch='"+branch+"' or unions='"+unions+"'";
+	String query ="";
+	if(unions.equals("admin")){
+		query="select * from booking";
+	}else{
+	query="select * from booking where branch='"+branch+"' or unions='"+unions+"'";
+	}
 	rs = stmt.executeQuery(query);
 while(rs.next())
 {
@@ -427,14 +453,13 @@ else if(option.equals("showUnion")){
 else if(option.equals("delete")){
 	
 }else if(option.equals("addBranch")){
-	System.out.println("adding branch ................");
+	
 	String name = request.getParameter("Name");
     String location = request.getParameter("location");
     String manager = request.getParameter("manager");
     String phone = request.getParameter("phone");
-    String union = unions;
-    String date = m4;
     
+    String date = m4;
   
     pst = con.prepareStatement("insert into branch(date,branchName,location,branchManager,branchPhone,unions)values(?,?,?,?,?,?)");
     pst.setString(1, date);
@@ -442,7 +467,7 @@ else if(option.equals("delete")){
     pst.setString(3, location);
     pst.setString(4, manager);
     pst.setString(5, phone);
-    pst.setString(6, union);
+    pst.setString(6, unions);
     pst.executeUpdate();
     JSONObject obj = new JSONObject();
     obj.put("bankShortCode", name);
@@ -451,7 +476,7 @@ else if(option.equals("delete")){
     out.print(list.toJSONString());
 	out.flush();
 }else if(option.equals("addUnion")){
-	System.out.println("adding branch ................");
+
 	String name = request.getParameter("Name");
     String location = request.getParameter("location");
     String manager = request.getParameter("union");
@@ -475,7 +500,7 @@ else if(option.equals("delete")){
 }
 
 else if(option.equals("addDriver")){
-	System.out.println("adding branch ................");
+	
 	String name = request.getParameter("Name");
     String gender = request.getParameter("gender");
     String bran = request.getParameter("branch");
@@ -544,7 +569,7 @@ else if(option.equals("addTrip")){
 }
 
 else if(option.equals("addVehicle")){
-	System.out.println("adding branch ................");
+	
 	String driver = request.getParameter("driver");
     String type = request.getParameter("type");
     String model = request.getParameter("model");
@@ -574,7 +599,7 @@ else if(option.equals("addVehicle")){
 }
 
 else if(option.equals("addBook")){
-	System.out.println("adding branch ................");
+	
 	String idNumber = request.getParameter("idNumber");
 	String passenger = request.getParameter("passenger");
 	session.setAttribute("passenger", passenger);
@@ -928,7 +953,6 @@ else if(option.equals("getA")){
 				
 				}else if(option.equals("deleteVehi")){
 					
-                    System.out.println("deleting ..............");
 					
 					pst = con.prepareStatement("delete from vehile where id=?");
 					pst.setString(1, ids);
@@ -946,7 +970,6 @@ else if(option.equals("getA")){
 					out.flush();
 					}else if(option.equals("deletepass")){
 						
-	                    System.out.println("deleting ..............");
 						
 						pst = con.prepareStatement("delete from booking where id=?");
 						pst.setString(1, ids);
@@ -964,8 +987,6 @@ else if(option.equals("getA")){
 						out.flush();
 						}else if(option.equals("deleteT")){
 							
-		                    System.out.println("deleting ..............");
-							
 							pst = con.prepareStatement("delete from trip where id=?");
 							pst.setString(1, ids);
 							pst.executeUpdate();
@@ -980,9 +1001,9 @@ else if(option.equals("getA")){
 
 							out.print(list.toJSONString());
 							out.flush();
-							}else if(option.equals("deleteDr")){
+							}else if(option.equals("deleteUnion")){
 								
-			                    System.out.println("deleting ..............");
+			                    
 								
 								pst = con.prepareStatement("delete from union1 where id=?");
 								pst.setString(1, ids);
@@ -1000,7 +1021,7 @@ else if(option.equals("getA")){
 								out.flush();
 								}else if(option.equals("deleteSta")){
 									
-				                    //System.out.println("deleting ..............");
+				                    
 									
 									pst = con.prepareStatement("delete from branch where id=?");
 									pst.setString(1, ids);
@@ -1043,7 +1064,7 @@ else if(option.equals("getA")){
 
 
 									else if(option.equals("seat")){
-										System.out.println("seat called..." +tripName);
+										
 										String query = "select * from trip where trip='"+tripName+"'";
 										
 										List<Integer> numbers=new ArrayList();
@@ -1074,7 +1095,7 @@ else if(option.equals("getA")){
 									    	sn=rs.getInt("seatNumber");
 									    	numbers.add(sn);
 									    }
-									    System.out.println("the size is = " + numbers);
+									   
 									    Collections.sort(numbers);
 									    int ii = 1;
 									    while(ii< numbers.size()) {
@@ -1082,12 +1103,12 @@ else if(option.equals("getA")){
 
 									        } else {
 									        	int check;
-									            System.out.println("Missing number is " + (numbers.get(ii-1) + 1));
+									            
 									            numbers.add((numbers.get(ii-1)+1));
 									            Collections.sort(numbers);
 									            check = numbers.get(ii-1) + 1;
 									            sn = check-1;
-									            System.out.println(" missing seat for the range "+ sn);
+									            
 									        }
 									        ii++;
 									    }
@@ -1097,7 +1118,7 @@ else if(option.equals("getA")){
 					                  ///////////////////  things happen here ///////////////////////
 									    
 									    if(sn == seats-1){
-									    	System.out.println(seats-1 +" is the remainig seat");
+									    	
 									    	pst = con.prepareStatement("update trip set status='Started',sTime=? where id=?");
 									    	pst.setString(1, endTime);
 											pst.setString(2, idt);
@@ -1106,11 +1127,11 @@ else if(option.equals("getA")){
 									    	
 									    }else if(sn == 0){
 									    	seatForU = 1;
-									    	System.out.println("take the first seat  " + seats);
+									    	
 									    }else if(sn != seats){
 									    	
 									    	seatForU = sn+1;
-									    	System.out.println(seats);
+									    	
 									    }else{
 									    	continue;
 									    }
@@ -1159,7 +1180,9 @@ else if(option.equals("getA")){
 									    list.add(obj);
 									    ///////////////***************   Calculate End Time  ****************/////////////////
 									    String sTime = "";
-									    String sql = "select sTime from trip where id='"+id+"'";
+									    String speed="";
+									    String union="";
+									    String sql = "select sTime,speedL,unions from trip where id='"+id+"'";
 									    rs = stmt.executeQuery(sql);
 									    while(rs.next()){
 									    	sTime=rs.getString(1);
@@ -1167,7 +1190,7 @@ else if(option.equals("getA")){
 									    	rs = stmt.executeQuery(sql1);
 									    	while(rs.next()){
 									    		munites= rs.getString(1);
-									    		System.out.println("the driver used "+munites+" to reach his destination");
+									    		
 									    	}
 									    }
 									    
@@ -1177,7 +1200,7 @@ else if(option.equals("getA")){
 									    //////////////****************   Calculate End Time  ****************/////////////////
 									    
 									}else if(option.equals("showpass")){
-										System.out.println("printing passengers..........");
+										
 										String query = "select trip from trip where id ='"+ids+"'";
 										rs = stmt.executeQuery(query);
 										while(rs.next()){
@@ -1247,7 +1270,7 @@ else if(option.equals("getA")){
 									    String pass = request.getParameter("pass");
 									    String branches = request.getParameter("bBranch");
 									    
-									    System.out.println(union+" "+name+" "+pass+" "+branches);
+								
 									    
 									    String date = m4;
 									    
@@ -1331,11 +1354,5 @@ else if(option.equals("getA")){
 														
 										
 									}
-
-
-
-
-                            
-
 
 %>

@@ -361,7 +361,7 @@ body{margin-top:20px;}
 			     
 			       if(dash.equals("admin")){
 			       	dashPage = admin;
-			       }else if(dash.equals("union")){
+			       }else if(dash.equals("Union")){
 			       	dashPage = union1;
 			       	
 			       }else{
@@ -405,8 +405,7 @@ $(window).on('load', function() {
 });
 
 function addFieldStaff(){
-	  
-    alert("add called...."); 
+
     $.ajax({
  		  
  		  type:"POST",
@@ -439,7 +438,6 @@ function trip(){
 			  var obj = JSON.parse(msg);
 			  var datapoints = obj[0].dataP;
 			  
-			  alert(datapoints);
 			  var options = {
 					  chart: {
 					      height: 350,
@@ -490,8 +488,7 @@ function profit(){
 		  success:function(msg){
 			  var obj = JSON.parse(msg);
 			  var datapoints = obj[0].dataPo;
-			  
-			  alert("hello "+datapoints);
+	
 			  var options = {
 					  chart: {
 					      height: 350,
@@ -615,7 +612,7 @@ function tDrivers(){
 		  success:function(msg){
 			  
 			  var obj = JSON.parse(msg);
-			  alert("Drivers is = "+obj[0].totalDri);
+			  
 				 //  var notification = alertify.notify('ID Exists', 'success', 5, function(){  console.log('dismissed'); }); alertify.set('notifier','position', 'top-right');
 			  $("#tDri").html(obj[0].totalDri);
   			 
@@ -638,7 +635,7 @@ function tTrips(){
 		  success:function(msg){
 			  
 			  var obj = JSON.parse(msg);
-			  alert(obj[0].tTrip);
+			  
 				 //  var notification = alertify.notify('ID Exists', 'success', 5, function(){  console.log('dismissed'); }); alertify.set('notifier','position', 'top-right');
 			  $("#tTrip").html(obj[0].totalT);
  			 
@@ -661,7 +658,7 @@ function tCash(){
 		  success:function(msg){
 			  
 			  var obj = JSON.parse(msg);
-			  alert(obj[0].tCash);
+			  
 				 //  var notification = alertify.notify('ID Exists', 'success', 5, function(){  console.log('dismissed'); }); alertify.set('notifier','position', 'top-right');
 			  $("#tCash").html(obj[0].tCash);
 			 
@@ -677,7 +674,6 @@ function tCash(){
 
 
 function logOut(){
-	alert("Logging out ............");
 	
 	$.ajax({
 		  

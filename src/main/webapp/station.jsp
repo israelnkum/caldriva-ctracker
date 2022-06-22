@@ -314,28 +314,26 @@ $(window).on('load', function() {
     //	$('.preloader').addClass('preloader-deactivate');
 });
 </script>
-
+													   <%
+													     String dash = branch;
+													     String dashPage="";
+													     String admin = "adminDashboard.jsp";
+													     String union1 = "unionDashboard.jsp";
+													     String branch1 = "BranchDashboard.jsp";
+													     
+													       if(dash.equals("admin")){
+													       	dashPage = admin;
+													       }else if(dash.equals("Union")){
+													       	dashPage = union1;
+													       	
+													       }else{
+													       	dashPage = branch1;
+													       }
+													     
+													     %>
     <div id="app">
     
     <!-- start side bar -->
-    
-         <%
-     String dash = branch;
-     String dashPage="";
-     String admin = "adminDashboard.jsp";
-     String union1 = "unionDashboard.jsp";
-     String branch1 = "BranchDashboard.jsp";
-     
-       if(dash.equals("admin")){
-       	dashPage = admin;
-       }else if(dash.equals("Union")){
-       	dashPage = union1;
-       	
-       }else{
-       	dashPage = branch1;
-       }
-     
-     %>
     
         <div id="sidebar" class="active">
             <div class="sidebar-wrapper active">
@@ -354,7 +352,7 @@ $(window).on('load', function() {
                         <li class="sidebar-title">Menu</li>
 
                         <li class="sidebar-item  ">
-                            <a href=<%out.println(dashPage); %> class='sidebar-link'>
+                            <a href="<% out.println(dashPage);%>" class='sidebar-link'>
                                 <i class="bi bi-grid-fill"></i>
                                 <span>Dashboard</span>
                             </a>
@@ -493,18 +491,10 @@ $(window).on('load', function() {
                                                 
                                             </div>
                                             
-                                      <div class="form-group floating-label col-md-4 mb-3">
+                                      <div class="col-md-4 mb-3">
 										<label for="" class="mt-1">Select Branch Manager</label>
-											<select name="driver" id="manager" class="choices form-select">
-											<%
-											    String sql="Select * from branchmanager ";
-												ResultSet rst = st.executeQuery(sql);
-												while(rst.next()){
-											%>
-													<option ><%=rst.getString("manager")%></option>
-											<%} %>
-												
-											</select> 
+											<input name="driver" id="manager" class="form-control">
+											
 										</div>
                                             
                                              <div class="col-md-4 mb-3">
@@ -569,13 +559,10 @@ $(window).on('load', function() {
                                                 
                                             </div>
                                             
-                                      <div class="form-group floating-label col-md-4 mb-3">
-										<label for="" class="mt-1">Select Branch Manager</label>
-											<select name="manager1" id="manager1" class="choices form-select">
-												<option value=""></option>
-												<option >Manager 1</option>
-												<option >Manager 2</option>
-											</select> 
+                                      <div class="col-md-4 mb-3">
+										<label>Select Branch Manager</label>
+											<input name="manager1" id="manager1" class="form-control">
+												
 										</div>
                                             
                                              <div class="col-md-4 mb-3">
@@ -723,7 +710,7 @@ $(window).on('load', function() {
 												
 												 function add(){
 										        	  
-												       alert("add called...."); 
+												       
 										        	  $.ajax({
 										        		  
 										        		  type:"POST",
@@ -782,7 +769,6 @@ $(window).on('load', function() {
 												 
 								            	 function gone(id){   	
 												 
-														alert(id);
 													
 											        	  $.ajax({
 											        		  type:"GET",
@@ -805,8 +791,6 @@ $(window).on('load', function() {
 											        	  
 											          }
 								            	 function logOut(){
-														alert("Logging out ............");
-														
 														$.ajax({
 											        		  
 											        		  type:"POST",

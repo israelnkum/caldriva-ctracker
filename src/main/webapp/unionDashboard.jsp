@@ -244,15 +244,14 @@ body{margin-top:20px;}
 	String p=null;
 	String u=null;
         response.setHeader("cache-control", "no-cache, no-store, must-revalidate");
-	ResultSet resultSet = st.executeQuery("select * from login where unions='"+union+"'");
+	ResultSet resultSet = st.executeQuery("select * from login where branch='admin'");
 	
 	while(resultSet.next()){
 		b=resultSet.getString("branch");
 		u=resultSet.getString("unions");
 		p=resultSet.getString("password");
 	}
-        if(!branch.equals("Union")|| !union.equals(u)){
-        	  System.out.println("user does not exist");
+        if(!branch.equals("Union")&& !branch.equals("admin")){
               response.sendRedirect("index.jsp");   
         }
   	}catch(Exception e){
@@ -499,7 +498,7 @@ body{margin-top:20px;}
                                                     </div>      
 
 
-     <%
+                          <%
      String dash = branch;
      String dashPage="";
      String admin = "adminDashboard.jsp";
@@ -508,7 +507,7 @@ body{margin-top:20px;}
      
        if(dash.equals("admin")){
        	dashPage = admin;
-       }else if(dash.equals("union")){
+       }else if(dash.equals("Union")){
        	dashPage = union1;
        	
        }else{
@@ -551,8 +550,7 @@ tDrivers();
 profit();
 tUncompleted();
 function addBranch(){
-	  
-    alert("add called...."); 
+	
     $.ajax({
  		  
  		  type:"POST",
@@ -575,8 +573,7 @@ function addBranch(){
 }
 
 function addFieldStaff(){
-	  
-    alert("add called...."); 
+	 
     $.ajax({
  		  
  		  type:"POST",
@@ -609,8 +606,7 @@ function trip(){
 		  success:function(msg){
 			  var obj = JSON.parse(msg);
 			  var datapoints = obj[0].dataPoints;
-			  
-			  alert(datapoints);
+			
 			  var options = {
 					  chart: {
 					      height: 350,
@@ -660,7 +656,6 @@ function profit(){
 			  var obj = JSON.parse(msg);
 			  var datapoints = obj[0].dataPoints;
 			  
-			  alert(datapoints);
 			  var options = {
 					  chart: {
 					      height: 350,
@@ -786,7 +781,7 @@ function tDrivers(){
 		  success:function(msg){
 			  
 			  var obj = JSON.parse(msg);
-			  alert(obj[0].totalDri);
+			  
 				 //  var notification = alertify.notify('ID Exists', 'success', 5, function(){  console.log('dismissed'); }); alertify.set('notifier','position', 'top-right');
 			  $("#dri1").html(obj[0].totalDri);
    			 
@@ -825,8 +820,6 @@ function tUncompleted(){
 }
 
 function logOut(){
-	alert("Logging out ............");
-	
 	$.ajax({
 		  
 		  type:"POST",

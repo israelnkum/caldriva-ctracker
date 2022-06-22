@@ -369,10 +369,21 @@ body{margin-top:20px;}
 																				</select> 
 																			</div>
 							                                        
-							                                       <div class="col-sm-6">
+							                                       <div class="form-group floating-label col-md-6 mb-6">
 							                                            <label>Manager's Name</label>
-							                                            <input class="form-control form-control" type="text"
+							                                            <select class="choices form-select" type="text"
 							                                                id="mName" required>
+							                                                
+							                                                <%
+																				    String sqll="Select * from branchmanager";
+																				    
+																					 rst = st.executeQuery(sqll);
+																					while(rst.next()){
+																				%>
+																						<option ><%=rst.getString("manager")%></option>
+																				<%} %>
+																					
+																				</select> 
 							                                        </div>
 							                                        
 							                                        <div class="col-sm-12">
@@ -532,10 +543,21 @@ body{margin-top:20px;}
 																				</select> 
 																			</div>
 																			
-																  <div class="col-sm-6">
+																  <div class="form-group floating-label col-md-6 mb-3">
 							                                            <label>Manager's Name</label>
-							                                            <input class="form-control form-control" type="text"
+							                                            <select class="choices form-select" type="text"
 							                                                id="bName" required>
+							                                                
+							                                                <%
+																				    String sqll1="Select * from unionmanager";
+																				    
+																					 rst = st.executeQuery(sqll1);
+																					while(rst.next()){
+																				%>
+																						<option ><%=rst.getString("manager")%></option>
+																				<%} %>
+																					
+																				</select> 
 							                                        </div>
 							                                        
 							                                        <div class="col-sm-6">
@@ -570,7 +592,7 @@ body{margin-top:20px;}
 													     
 													       if(dash.equals("admin")){
 													       	dashPage = admin;
-													       }else if(dash.equals("union")){
+													       }else if(dash.equals("Union")){
 													       	dashPage = union1;
 													       	
 													       }else{
@@ -617,7 +639,6 @@ body{margin-top:20px;}
 													tUncompleted();
 													function addUnion(){
 											        	  
-													       alert("add called...."); 
 											        	  $.ajax({
 											        		  
 											        		  type:"POST",
@@ -641,7 +662,7 @@ body{margin-top:20px;}
 													
 													function addBranch(){
 											        	  
-													       alert("add called...."); 
+													      
 													       $.ajax({
 												        		  
 												        		  type:"POST",
@@ -664,8 +685,7 @@ body{margin-top:20px;}
 											          }
 													
 													function addFieldStaff(){
-											        	  
-													       alert("add called...."); 
+											        	   
 													       $.ajax({
 												        		  
 												        		  type:"POST",
@@ -702,7 +722,7 @@ body{margin-top:20px;}
 											        			  var obj = JSON.parse(msg);
 											        			  var datapoints = obj[0].dataPoints;
 											        			  
-											        			  alert(datapoints);
+											        		
 											        			  var options = {
 											        					  chart: {
 											        					      height: 350,
@@ -755,7 +775,7 @@ body{margin-top:20px;}
 											        			  var obj = JSON.parse(msg);
 											        			  var datapoints = obj[0].dataPoints;
 											        			  
-											        			  alert(datapoints);
+											        			  
 											        			  var options = {
 											        					  chart: {
 											        					      height: 350,
@@ -1018,7 +1038,6 @@ body{margin-top:20px;}
 									            	 }
 													
 													function logOut(){
-														alert("Logging out ............");
 														
 														$.ajax({
 											        		  

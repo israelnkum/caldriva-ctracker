@@ -313,26 +313,24 @@ $(window).on('load', function() {
 });
 </script>
 
-    <%
-     String dash = branch;
-     String dashPage="";
-     String admin = "adminDashboard.jsp";
-     String union1 = "unionDashboard.jsp";
-     String branch1 = "BranchDashboard.jsp";
-     
-       if(dash.equals("admin")){
-       	dashPage = admin;
-       }else if(dash.equals("Union")){
-       	dashPage = union1;
-       	
-       }else{
-       	dashPage = branch1;
-       }
-     
-     %>
-
     <div id="app">
-    
+    													   <%
+													     String dash = branch;
+													     String dashPage="";
+													     String admin = "adminDashboard.jsp";
+													     String union1 = "unionDashboard.jsp";
+													     String branch1 = "BranchDashboard.jsp";
+													     
+													       if(dash.equals("admin")){
+													       	dashPage = admin;
+													       }else if(dash.equals("Union")){
+													       	dashPage = union1;
+													       	
+													       }else{
+													       	dashPage = branch1;
+													       }
+													     
+													     %>
     <!-- start side bar -->
     
         <div id="sidebar" class="active">
@@ -352,7 +350,7 @@ $(window).on('load', function() {
                         <li class="sidebar-title">Menu</li>
 
                         <li class="sidebar-item  ">
-                            <a href=<%out.println(dashPage); %> class='sidebar-link'>
+                            <a href="<% out.println(dashPage);%>" class='sidebar-link'>
                                 <i class="bi bi-grid-fill"></i>
                                 <span>Dashboard</span>
                             </a>
@@ -1031,8 +1029,6 @@ $(window).on('load', function() {
 												 }
 												 
 								            	 function gone(id){   	
-												 
-														alert(id);
 													
 											        	  $.ajax({
 											        		  type:"GET",
@@ -1068,8 +1064,6 @@ $(window).on('load', function() {
 												 }
 												 
 								            	 function ended(id){   	
-												 
-														alert(id);
 													
 											        	  $.ajax({
 											        		  type:"GET",
@@ -1082,9 +1076,6 @@ $(window).on('load', function() {
 											        			  var time = obj[0].munites;
 											        			  var notification = alertify.notify('Success', 'success', 5, function(){  console.log('dismissed'); }); alertify.set('notifier','position', 'top-right');
 											        			  getall();
-											        			  
-											        			  alert(time);
-											        			  
 											        			  
 											        		  },
 											        		  error(err){
@@ -1108,8 +1099,6 @@ $(window).on('load', function() {
 												 
 								            	 function canceled(id){   	
 												 
-														alert(id);
-													
 											        	  $.ajax({
 											        		  type:"GET",
 											        		  url:"calData.jsp",
@@ -1134,7 +1123,6 @@ $(window).on('load', function() {
 												 
 								            	 function incomplet(id){   	
 								            		 sessionStorage.setItem("id",id);
-														alert(id);
 														$("#danger").modal("show");
 											        	   $.ajax({
 											        		  type:"GET",
@@ -1160,7 +1148,6 @@ $(window).on('load', function() {
 								            	 
 								            	 function incomplete(id){   	
 								            		var is = sessionStorage.getItem("id",id);
-														alert(is);
 														$("#danger").modal("show");
 											        	   $.ajax({
 											        		  type:"GET",
@@ -1252,8 +1239,6 @@ $(window).on('load', function() {
 								               //////////////////\\\\\\\\\\\\\\\\   On Select of drop down \\\\\\\\\\///////////
 		
 								               function logOut(){
-														alert("Logging out ............");
-														
 														$.ajax({
 											        		  
 											        		  type:"POST",
